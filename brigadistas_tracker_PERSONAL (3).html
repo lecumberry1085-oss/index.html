@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Brigadistas de Emergencia — Farmatodo SHA</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f1f5f9;color:#0f172a;padding:16px}
+.wrap{max-width:1200px;margin:0 auto}
+/* Header */
+.header{border-radius:12px 12px 0 0;overflow:hidden}
+.header-top{display:flex;align-items:stretch;min-height:72px}
+.header-left{background:#1a6fa8;flex:1;padding:14px 20px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+.header-left::before{content:'';position:absolute;left:-20px;top:-20px;width:120px;height:120px;background:rgba(255,255,255,.07);border-radius:50%}
+.header-left::after{content:'';position:absolute;right:60px;top:-30px;width:100px;height:100px;background:rgba(255,255,255,.04);border-radius:50%}
+.hi{width:48px;height:48px;border-radius:12px;background:#0d3d6b;border:2px solid #f5c842;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.header-text{z-index:1;flex:1}
+.ht{font-size:15px;font-weight:700;color:#fff}
+.hs{font-size:11px;color:#a8d4f0;margin-top:2px}
+.header-right{background:#f5c842;padding:14px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:120px}
+.hr-label{font-size:9px;font-weight:700;color:#7a5500;text-transform:uppercase;letter-spacing:.8px}
+.hr-val{font-size:24px;font-weight:900;color:#4a3200;line-height:1}
+.hr-sub{font-size:10px;color:#7a5500;font-weight:600}
+.hbtn{font-size:11px;color:#a8d4f0;background:rgba(255,255,255,.15);padding:5px 12px;border-radius:6px;cursor:pointer;border:1px solid rgba(255,255,255,.2);z-index:1;white-space:nowrap}
+.hbtn:hover{background:rgba(255,255,255,.25);color:#fff}
+.info-banner{background:#0d3d6b;padding:9px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08)}
+.info-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#a8d4f0}
+.info-item strong{color:#f5c842}
+.info-div{width:1px;height:14px;background:rgba(255,255,255,.15);flex-shrink:0}
+/* Tabs */
+.tabs{display:flex;background:#0d3d6b;padding:0 16px;overflow-x:auto;border-top:1px solid rgba(255,255,255,.06)}
+.tab{font-size:12px;padding:10px 18px;cursor:pointer;color:#7aaecc;border-bottom:2px solid transparent;border:none;background:none;white-space:nowrap}
+.tab.active{color:#f5c842;border-bottom:2px solid #f5c842}
+.tab:hover:not(.active){color:#c8e4f8}
+.tab-locked{opacity:.5;cursor:default}
+.tab-locked:hover{color:#7aaecc}
+/* Body */
+.body{background:#f8fafc;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px;padding:20px 24px;min-height:300px}
+.hidden{display:none!important}
+/* Métricas */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px}
+.metric{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:9px 12px}
+.ml{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.mv{font-size:20px;font-weight:600}
+.ms{font-size:10px;color:#94a3b8;margin-top:1px}
+.prog-bg{background:#e2e8f0;border-radius:6px;height:6px;margin-bottom:12px;overflow:hidden}
+.prog-fill{height:100%;border-radius:6px;transition:width .6s}
+.zone-box{border-radius:10px;padding:10px 14px;margin-bottom:12px;display:none;border:1px solid}
+/* Filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters input,.filters select,.finp{font-size:12px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:8px;outline:none;background:#fff;color:#0f172a}
+.filters input{flex:1;min-width:140px}
+.fbtn{font-size:11px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#64748b;cursor:pointer}
+/* Store cards indicador */
+.zh{display:flex;align-items:center;gap:8px;margin:12px 0 6px}
+.zchip{font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap}
+.zline{flex:1;height:.5px;background:#e2e8f0}
+.zct{font-size:11px;color:#64748b;white-space:nowrap}
+.sc{border-radius:10px;padding:9px 12px;margin-bottom:5px;border:1px solid}
+.sr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px}
+.sn{font-size:13px;font-weight:500;flex:1}
+.sb{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+.bb{background:#e2e8f0;border-radius:4px;height:3px;margin-bottom:6px;overflow:hidden}
+.bf{height:100%;border-radius:4px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:2px 8px;font-size:11px;color:#374151}
+.chip-e{display:inline-flex;align-items:center;gap:4px;border:1px dashed #cbd5e1;border-radius:20px;padding:2px 8px;font-size:11px;color:#94a3b8}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block}
+.s-c{background:#f0fdf4;border-color:#bbf7d0}.b-c{color:#15803d;background:#fff;border-color:#bbf7d0}
+.s-p{background:#fffbeb;border-color:#fde68a}.b-p{color:#92400e;background:#fff;border-color:#fde68a}
+.s-n{background:#fff1f2;border-color:#fecdd3}.b-n{color:#9f1239;background:#fff;border-color:#fecdd3}
+/* Formulario */
+.form-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+.form-topbar{background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:14px 20px}
+.form-topbar h2{font-size:14px;font-weight:600;margin-bottom:2px}
+.form-topbar p{font-size:12px;color:#64748b}
+.form-body{padding:20px}
+.row-2{display:grid;grid-template-columns:1fr 2fr;gap:14px;margin-bottom:16px}
+.row-brig{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+.brig-panel{border:1.5px solid #e2e8f0;border-radius:12px;overflow:hidden}
+.brig-panel-header{padding:10px 14px;display:flex;align-items:center;gap:8px}
+.b1-header{background:linear-gradient(135deg,#dbeafe,#eff6ff)}
+.b2-header{background:linear-gradient(135deg,#ede9fe,#f5f3ff)}
+.occ-header{background:linear-gradient(135deg,#dcfce7,#f0fdf4)}
+.brig-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.b1-badge{background:#bfdbfe;color:#1e40af}
+.b2-badge{background:#ddd6fe;color:#5b21b6}
+.brig-dates-bar{padding:8px 14px;font-size:11px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border-bottom:1px solid #f1f5f9}
+.b1-dates{background:#eff6ff;color:#1e40af}
+.b2-dates{background:#f5f3ff;color:#5b21b6}
+.brig-fields{padding:12px 14px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.field input{width:100%;font-size:13px;padding:7px 10px;border:1px solid #e2e8f0;border-radius:7px;outline:none;background:#fff;color:#0f172a;transition:border-color .2s,background .2s}
+.field input:focus{border-color:#94a3b8}
+.field input.registered{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.field select{width:100%;font-size:13px;padding:7px 10px;border:1px solid #e2e8f0;border-radius:7px;outline:none;background:#fff;color:#0f172a}
+.reg-tag{font-size:10px;font-weight:600;color:#15803d;background:#dcfce7;padding:2px 8px;border-radius:10px;margin-left:auto}
+.submit-btn{width:100%;background:#0f172a;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s}
+.submit-btn:hover:not(:disabled){background:#1e293b}
+.submit-btn:disabled{background:#cbd5e1;cursor:not-allowed}
+/* Confirmación post-registro */
+.confirm-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:20px;text-align:center;display:none}
+.confirm-icon{font-size:40px;margin-bottom:8px}
+.confirm-title{font-size:15px;font-weight:700;color:#15803d;margin-bottom:4px}
+.confirm-sub{font-size:12px;color:#166534;margin-bottom:14px}
+.confirm-people{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.confirm-person{background:#fff;border:1px solid #bbf7d0;border-radius:10px;padding:10px 16px;text-align:left;min-width:180px}
+.cp-role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.cp-name{font-size:13px;font-weight:600;color:#0f172a}
+.cp-ci{font-size:11px;color:#64748b}
+.cp-dates{font-size:11px;color:#15803d;margin-top:3px}
+.inv-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.inv-btn{font-size:12px;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px}
+.inv-btn-b1{background:#1e40af;color:#fff}
+.inv-btn-b1:hover{background:#1e3a8a}
+.inv-btn-b2{background:#5b21b6;color:#fff}
+.inv-btn-b2:hover{background:#4c1d95}
+.countdown{font-size:11px;color:#64748b;margin-top:4px}
+.countdown span{font-weight:700;color:#15803d}
+/* Admin PIN modal */
+.admin-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;display:none}
+.admin-card{background:#fff;border-radius:16px;padding:28px;max-width:320px;width:100%;text-align:center}
+.admin-card h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.admin-card p{font-size:12px;color:#64748b;margin-bottom:16px}
+.admin-input{width:100%;font-size:16px;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;outline:none;text-align:center;letter-spacing:3px;font-weight:700}
+.admin-input:focus{border-color:#1a6fa8}
+.admin-input.shake{animation:shake .3s;border-color:#dc2626}
+.admin-btns{display:flex;gap:8px;margin-top:12px}
+.admin-ok{flex:1;background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer}
+.admin-cancel{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:10px 16px;font-size:13px;cursor:pointer;color:#64748b}
+.admin-err{color:#dc2626;font-size:11px;margin-top:8px;min-height:16px}
+/* Asistencia */
+.asis-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
+.asis-table th{background:#f8fafc;padding:8px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#64748b;border-bottom:1px solid #e2e8f0}
+.asis-table td{padding:8px 12px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+.asis-table tr:last-child td{border-bottom:none}
+.check-btn{font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid;cursor:pointer;white-space:nowrap}
+.check-si{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.check-no{background:#fff1f2;border-color:#fecdd3;color:#9f1239}
+.check-pend{background:#f8fafc;border-color:#e2e8f0;color:#64748b}
+/* Reporte */
+.rtable{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
+.rtable th{background:#f8fafc;padding:8px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#64748b;border-bottom:1px solid #e2e8f0}
+.rtable td{padding:8px 12px;border-bottom:1px solid #f1f5f9}
+.rtable tr:last-child td{border-bottom:none}
+.badge-z{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px}
+.rsection{margin-bottom:20px}
+.rsection-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.print-btn{font-size:11px;padding:6px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#0f172a;cursor:pointer}
+.slabel{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin-bottom:6px}
+.loading-inline{color:#64748b;font-size:13px;padding:2rem;text-align:center}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+.footer{margin-top:14px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@media(max-width:700px){.row-2,.row-brig{grid-template-columns:1fr}.info-div{display:none}}
+@media print{.header,.tabs,.filters,.hbtn,.print-btn,.fbtn,.footer,#tab-postulacion,#tab-asistencia,.admin-modal{display:none!important}.body{border:none;padding:0}.wrap{max-width:100%}}
+</style>
+</head>
+<body>
+
+<!-- ADMIN PIN MODAL -->
+<div class="admin-modal" id="admin-modal">
+  <div class="admin-card">
+    <h3>🔒 Acceso administrador</h3>
+    <p>Ingresa el código SHA para acceder a esta sección</p>
+    <input class="admin-input" type="password" id="admin-input" placeholder="••••••••"
+      maxlength="12" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <div class="admin-err" id="admin-err"></div>
+    <div class="admin-btns">
+      <button class="admin-cancel" onclick="closeAdmin()">Cancelar</button>
+      <button class="admin-ok" onclick="checkAdmin()">Ingresar</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div class="header-left">
+        <div class="hi">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Escudo -->
+            <path d="M14 2L24 6.5V14C24 19.5 19.5 24 14 26C8.5 24 4 19.5 4 14V6.5L14 2Z" fill="#1a6fa8"/>
+            <path d="M14 3.8L22.5 7.8V14C22.5 18.8 18.8 22.8 14 24.5C9.2 22.8 5.5 18.8 5.5 14V7.8L14 3.8Z" fill="#0d3d6b"/>
+            <!-- Cruz blanca -->
+            <rect x="12.5" y="9" width="3" height="10" rx="1" fill="white"/>
+            <rect x="9" y="12.5" width="10" height="3" rx="1" fill="white"/>
+            <!-- Borde escudo amarillo -->
+            <path d="M14 2L24 6.5V14C24 19.5 19.5 24 14 26C8.5 24 4 19.5 4 14V6.5L14 2Z" stroke="#f5c842" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div class="header-text">
+          <div class="ht">Brigadistas de Emergencia — Farmatodo SHA</div>
+          <div class="hs">LOPCYMAT y Normas COVENIN · 2 colaboradores por tienda</div>
+        </div>
+        <button class="hbtn" onclick="loadData()" id="btn">↻ Actualizar</button>
+      </div>
+      <div class="header-right">
+        <div class="hr-label">Cumplimiento</div>
+        <div class="hr-val" id="hm-pct">—</div>
+        <div class="hr-sub" id="hm-sub">cargando...</div>
+      </div>
+    </div>
+    <div class="info-banner">
+      <div class="info-item">📅 <strong>B1:</strong> 16 jun + 23 jun</div>
+      <div class="info-div"></div>
+      <div class="info-item">📅 <strong>B2:</strong> 18 jun + 25 jun</div>
+      <div class="info-div"></div>
+      <div class="info-item">🕗 <strong>Horario:</strong> 8:00–11:30 a.m.</div>
+      <div class="info-div"></div>
+      <div class="info-item">📍 <strong>Sede:</strong> Tienda Carlota</div>
+      <div class="info-div"></div>
+      <div class="info-item">🏢 <strong>Zonas:</strong> 01, 05 y 15</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" id="t-postulacion" onclick="showTab('postulacion')">📝 Postulación</button>
+    <button class="tab tab-locked" id="t-indicador"  onclick="requireAdmin('indicador')">📊 Indicador 🔒</button>
+    <button class="tab tab-locked" id="t-asistencia" onclick="requireAdmin('asistencia')">✅ Asistencia 🔒</button>
+    <button class="tab tab-locked" id="t-reporte"    onclick="requireAdmin('reporte')">📋 Reporte 🔒</button>
+    <button class="tab tab-locked" id="t-gestion"    onclick="requireAdmin('gestion')">✏️ Gestión 🔒</button>
+  </div>
+  <div class="body">
+    <div id="global-loading" class="loading-inline"><span class="spin">↻</span> Cargando...</div>
+    <div id="global-err" class="hidden" style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:1rem;color:#7f1d1d;font-size:13px"></div>
+
+    <!-- ══ POSTULACIÓN ══ -->
+    <div id="tab-postulacion" class="hidden">
+      <!-- Formulario de registro -->
+      <div id="form-section">
+        <div class="form-wrap">
+          <div class="form-topbar">
+            <h2>🛡️ Postulación de Brigadistas de Emergencia</h2>
+            <p>Selecciona tu tienda y completa los datos. Las fechas se asignan automáticamente.</p>
+          </div>
+          <div class="form-body">
+            <div class="row-2">
+              <div class="field">
+                <label>Zona</label>
+                <select id="f-zona" onchange="onZonaChange()">
+                  <option value="">— Selecciona —</option>
+                  <option value="01">Zona 01</option>
+                  <option value="05">Zona 05</option>
+                  <option value="15">Zona 15</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Centro de Trabajo</label>
+                <select id="f-tienda" disabled onchange="onTiendaChange()">
+                  <option value="">— Primero selecciona zona —</option>
+                </select>
+              </div>
+            </div>
+            <div class="row-brig">
+              <!-- B1 -->
+              <div class="brig-panel" id="panel-b1">
+                <div class="brig-panel-header b1-header">
+                  <span class="brig-badge b1-badge">👤 Brigadista 1</span>
+                  <span style="font-size:11px;color:#3b82f6;margin-left:auto">Martes</span>
+                  <span class="reg-tag hidden" id="b1-reg-tag">✓ Registrado</span>
+                </div>
+                <div class="brig-dates-bar b1-dates">
+                  📅 <strong>16 jun</strong> (M1) · 📅 <strong>23 jun</strong> (M2) · 🕗 8:00–11:30 a.m. · 📍 Tienda Carlota
+                </div>
+                <div class="brig-fields">
+                  <div class="field">
+                    <label>Cédula <span style="font-weight:400;text-transform:none">(sin puntos)</span></label>
+                    <input type="text" id="b1-ci" placeholder="Ej: 12345678"
+                      oninput="this.value=this.value.replace(/\D/g,'');validateForm()" maxlength="10" inputmode="numeric">
+                  </div>
+                  <div class="field">
+                    <label>Nombre y Apellido</label>
+                    <input type="text" id="b1-nombre" placeholder="Ej: Juan Pérez" oninput="validateForm()">
+                  </div>
+                </div>
+              </div>
+              <!-- B2 -->
+              <div class="brig-panel" id="panel-b2">
+                <div class="brig-panel-header b2-header">
+                  <span class="brig-badge b2-badge">👤 Brigadista 2</span>
+                  <span style="font-size:11px;color:#7c3aed;margin-left:auto">Jueves</span>
+                  <span class="reg-tag hidden" id="b2-reg-tag">✓ Registrado</span>
+                </div>
+                <div class="brig-dates-bar b2-dates">
+                  📅 <strong>18 jun</strong> (M1) · 📅 <strong>25 jun</strong> (M2) · 🕗 8:00–11:30 a.m. · 📍 Tienda Carlota
+                </div>
+                <div class="brig-fields">
+                  <div class="field">
+                    <label>Cédula <span style="font-weight:400;text-transform:none">(sin puntos)</span></label>
+                    <input type="text" id="b2-ci" placeholder="Ej: 87654321"
+                      oninput="this.value=this.value.replace(/\D/g,'');validateForm()" maxlength="10" inputmode="numeric">
+                  </div>
+                  <div class="field">
+                    <label>Nombre y Apellido</label>
+                    <input type="text" id="b2-nombre" placeholder="Ej: María García" oninput="validateForm()">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="submit-btn" id="submit-btn" onclick="postular()" disabled>Registrar Brigadistas</button>
+            <div id="post-err" class="hidden" style="margin-top:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px;font-size:13px;color:#7f1d1d"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmación post-registro -->
+      <div class="confirm-box" id="confirm-box">
+        <div class="confirm-icon">✅</div>
+        <div class="confirm-title">¡Registro exitoso!</div>
+        <div class="confirm-sub" id="confirm-sub">Los brigadistas han sido registrados correctamente.</div>
+        <div class="confirm-people" id="confirm-people"></div>
+        <div class="inv-btns" id="inv-btns"></div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button onclick="volverAlInicio()" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer">← Ir al inicio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ INDICADOR ══ -->
+    <div id="tab-indicador" class="hidden">
+      <div class="slabel">Resumen general</div>
+      <div class="sgrid" id="sg"></div>
+      <div class="prog-bg"><div class="prog-fill" id="pg" style="width:0%;background:#16a34a"></div></div>
+      <div id="zbox" class="zone-box"></div>
+      <div class="filters">
+        <input type="text" id="search" placeholder="🔍 Buscar tienda..." oninput="render()" autocomplete="off">
+        <select id="zoneF" onchange="render()">
+          <option value="">Todas las zonas</option>
+          <option value="01">Zona 01</option>
+          <option value="05">Zona 05</option>
+          <option value="15">Zona 15</option>
+        </select>
+        <select id="statusF" onchange="render()">
+          <option value="">Todos los estados</option>
+          <option value="complete">✓ Completo 2/2</option>
+          <option value="partial">⚠ Parcial 1/2</option>
+          <option value="none">✕ Sin postular</option>
+        </select>
+        <button class="fbtn" onclick="resetFilters()">✕ Limpiar</button>
+        <span style="font-size:11px;color:#94a3b8;white-space:nowrap" id="cnt"></span>
+      </div>
+      <div id="stores"></div>
+    </div>
+
+    <!-- ══ ASISTENCIA ══ -->
+    <div id="tab-asistencia" class="hidden">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+        <select id="a-zona" class="finp" onchange="renderAsistencia()">
+          <option value="">Todas las zonas</option>
+          <option value="01">Zona 01</option>
+          <option value="05">Zona 05</option>
+          <option value="15">Zona 15</option>
+        </select>
+        <select id="a-fecha" class="finp" onchange="renderAsistencia()">
+          <option value="">Todas las fechas</option>
+          <option value="16 jun">16 jun (B1·M1)</option>
+          <option value="18 jun">18 jun (B2·M1)</option>
+          <option value="23 jun">23 jun (B1·M2)</option>
+          <option value="25 jun">25 jun (B2·M2)</option>
+        </select>
+        <span style="font-size:11px;color:#94a3b8" id="a-count"></span>
+      </div>
+      <div id="asis-content"></div>
+    </div>
+
+    <!-- ══ REPORTE ══ -->
+    <div id="tab-reporte" class="hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:14px;font-weight:600">Reporte de Postulación y Asistencia</div>
+          <div style="font-size:11px;color:#64748b;margin-top:1px" id="report-date"></div>
+        </div>
+        <button class="print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+      </div>
+      <div id="reporte-content"></div>
+    </div>
+
+    <!-- ══ GESTIÓN ══ -->
+    <div id="tab-gestion" class="hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:14px;font-weight:600">Gestión de Registros</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Edita, elimina o regenera invitaciones de brigadistas registrados</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <select id="g-zona" class="finp" onchange="renderGestion()">
+            <option value="">Todas las zonas</option>
+            <option value="01">Zona 01</option>
+            <option value="05">Zona 05</option>
+            <option value="15">Zona 15</option>
+          </select>
+        </div>
+      </div>
+      <div id="gestion-content"></div>
+    </div>
+
+    <div class="footer">Farmatodo SHA · Brigadistas de Emergencia · Sede: Tienda Carlota · 8:00–11:30 a.m.</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+const SHA_LOGO_B64 = "data:image/jpeg;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/8QAAv/aAAwDAQACAAMAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6Q8c/uA1840zAAAAA5188yAAAACCCCJAAAAAAA6888888sOT999UAAAAA8999+AAdW9999lAAAAAA8m88888888q199UAAAAA8999+AA799999OAAAAAAu888/46888sS99UAAAAA8999+AEc99999upAAAAHe888UAeZ888599UAAAAA8999+ABe999999nAAAABV88+WAAJCCCP99UAAAAA8999+A/999y999YAAAAfd88840MAAAU999UAMIAB9999+AX999o299vvAAAA/8APPPHG9PQFPffTjXbTXXvfffj3PfbiWvffSwAAAPGdPPPPPP+NvfffffffffffffoPffdICPffbgAAAAN2dffPPPPKnfffffffffffffrfffcQI9vfepwAAAAAEb/ALPbzzyn32Y444477332xT32qkBHz330sAAQ8888gADzTzzrf1QAAAADz333D332xzzx7333wACTfzzz4AB1bzzx71QAAAADz331X333333333320IBF3zzwnYerzzyn31QAAAADz331X333333333330QADvTzzz77zzzvX31QAAAADz331X33Ywwwwyv3330gCd37zzzzzzvn331QAAAADz331X31MAAAAB/T33wAADFr3vTzPH/X/AP8A1wAAAANf/wD1jKXEAAAAABvLLJpPHLHODhBHPLIY88884c4MI888DPPPPLPLLPHPPOSn/wAq8LP7PeX8p9999hC0+ZV99V888tCCeqjD8889j8//AP3/AP8Avve/9/8A/wD/AP8Af/ff/wD/AMDDDDDDDDDzzzzIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/8QAAv/aAAwDAQACAAMAAAAQ8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888DDDDyFTHRCD2+6m4DDDDDq3+u7DDDPPPPNLDDDDDDD4zM9999eFX999/DDDDD9999XDDL9//AP8A+0MMMMMOZP33333331Hz338MMMMP/wB99XDD9/8A/wD/AP8Agwwwww8fffS+v/fff2fffwwwww//AH31cMf7/wD/AP8A/wBrDDDDTX999FDMs999T99/DDDDD/8AffVw03v/AP8A/wD/AO0MMMNeP333AMPPHGzz334MMMMP/wB99XDr/wD/AP3/AP8A+wwww3VfffaUjwww1vfffwzywwv/AH31cPz/AP8A+f8A/wDuNDDDDI9999ynawDW999vOeuOee999XL/AP8A/wDr1/8A/wA8MMMOiH333333sD73333333333331fP8A/wD740//AP8ApDDDDD3AIX99999W8999999999999TU//wD8w4//AP8AvlDDDDDDT+9HD999X99tMMMMM/8AffRv/wD/APjDTd//AP6wwxzywwgww5/ffQv/AH8MMMMP/wB99Q//AP7fPPPv/wD+0MP6Q001MMNv331f338MMMMP/wB99V//AP8A/wD/AP8A/wD/AP74g0NPffe/Q/PffVPffwwwww//AH31X/8A/wD/AP8A/wD/AP8A/wD4ww1Pffffffffc/8A338MMMMP/wB99V//AJQAAAAHP/8A/oMPMjz333332/z3334MMMMP/wB99V//AAQwwwwy9/8A/wDIDDwm5908pU370++8DDDDD2yywQyibDDDDDDbwyyvRNMLBQjzhBEMP99998/+/wDv/fWwCAAAQAQQAgAADaQf2bTgFy0wv1ff/fT3N/nlf/VP/wD+5kYGGv8A/wD/AP3M000ywwxxy0xn/wD/AP8ALC523/8A+sDDDBDDDBBzzzxo8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888/8QAQBEAAQIDAwYKCQIGAwAAAAAAAgADAQQSBREgBhAUFVJTExYiMjM0YnKCkiMwMUJDUVRjogchYXGAkbLBRHPh/9oACAECAQE/AP6lHX2WhvNyAp7KGyWfbM1d1FlbZUPZwnlQZWWUXt4QfCmLfsp3mzPmTTzTo3gcCzNsOufuARJaHN7k1oc3uTWhzW4NGDgFSYU4m2XXOYESWhze5NaHN7k1oc1uTRtuNlSYU4BZdIbxBaO9sLR3thaO9sLR3tj1L77Mu2Tjp0irTytciVEoNI7afnJuYKp5+rCxOzUuV7Lzgqy8rihQ3OedZMvNzEq460cCHBbHXnMWT/xvDgt3rYdzOML43IAoCnDMhS7HHMzDcuybrnNFWxbL1oPR3XuB6nJHKd6xpxsTjUwfPD/aZdbfabdbOoDz2x15zFk/8bw4Ld62HczygVu4p0LwgePLC0iiYSYePA0046VABWSbyctZwb4S6m7LnpPpmacP6c2sU5ZZypny2P8AHPbHXnMWT/xvDgt3rYdzPJhS3VtYjCsKVGFJXYSjdBWs/wAPPzLn3MGTVlsy0kDxB6RzM8y082QOhUKtuzdAnTbhzOeGD9NZsmrcNr3XQL8c9sdecxZP/G8OC3eth3MwwqKEE2NIU45oKXsL3RH/ACUx07n/AGYLHcFyzpaI7vPblhlaRMkLtFK4lu/VfiuJbv1X4qR/Tl+bbMhnGxp7KyfyBfsi0mZyM4B09nPbHXnMWT/xvDgt3rYdzNJhU5Vs4CMRIBwToXhVhKFUIq0WSZnn24+65gyfyg0L0D3Rf4qXmWJgK2nIEOGwOgd7+C2OvOYsn/jeHBbvWw7maTClurA+8Wkd1CVQ1Z3BqGlFCkoww5X2aQPhNAHJLn4WJuYlyvZecBSmVtoNcl6h1S2V8i70oGCl7Qk5kb2XwLNYHQO9/A/Z8rMOVmHKWqJHYWqJHdLVEjulqiR2FqiR2FLSjErXwYc7BbvWw7iCFZQghGkac5lSJkr743qUOprBOBS5VtYZmWamWTZcG8SVrWBMyLl4hW1t4wcdAqgcoVn5UzstyXfSh+SyQtqRnmHoNny9j3vXW71sO4pMKnL8E6dIU5pI6XLsE4F7dWIhEhuKCtDJeSmeW16I1OZM2lL80OFHsI2XWipNuIYpKdmJKYB5g6SBZK5QN21ZwOfFDnh623eth3FKBQzgmjqezBGgoEhjUNWchqGlFC4ow9Q9Jyr8LnWQJTWStmP/ALgHBF2VP5JzjA1s+lD8kbZtlSWDIW1SkLcZCJ+id5B57TnJpmcMAcpFaxnd/Faxnd/Faxnd/Faxnd/Faxnd/FWNMvPxe4U6sFsBXPAKpp/bOZUCZIo355Q72cE4Fzl+CsPnBVh84KsPnBVh84YMp7HZeljmmgudD8sEg4Tc8wcPddBMFUy0X8M1sdecxZP/ABvDgtAL56r7eCIiQ0ktGZ2FozOwtGZ2EDQhzcE2FTOdz9wipmZmRfcHhnOk21pUzv3POtKmd+551pUzv3POsnprSLLZjEryHkxz2mYhITMS3ZKOeSAjnJcIe86Clxpl2h/hmtjrzmLJ/wCN4cFodL6whq5KMKCKGe3pUpa05kNvl4LCtorNepPlNHz1L2tITA3tzIJ20ZFobzmW/MsocoBmx0eX6L3z2sGRlnFP29LQo5DXLPwqGa2OvOYsn/jeHBaHS+tnAucvz5WWYT7ITLQcsOf3cN8VfHADZmcBFZC5OxsqQ4d4PTv8/sj8s9sdecxZP/G8OC0OlzzjpAFIrhnttcM9trhnttcM9trhnttSrxcJcR4JsK2c5CJDSSt/JxxkjmJUKx2Nn1DbbjhUgFZLIXJBuBabOhyg5gYLY685iyf+N4cFodLnmzqdp2cQFSQxQxqGrA6FDhDniMFaeTchO8uAcE7tipzJO0Gei9KKcs6eZ58s55VwLo+1uKgy6XsbimbMtB4uRKuEpPJKedK970QfkrOsOSkbogFR7asaZl2Qcg6dK1jI79aykd+tZSO/VqONuzhkB1DisaZZZi9wh0rWMjv1rKR361hJb5tTs3Kmd4GtIZ20UyzAeeijUV+OWmG+DpI1pDO2tIZ21pDO2psmycqEk4VIxJFljLicR0Y1x1l/pjXHNj6Zxcc2PpnEWWUr70qa42yZe2SUMrZEfZJLjlLw/wCKa45sfTOLjpL/AEzi45y/0ziyamNfA8TYcFwe0tQP76C1A/voLUD2+gtQvb2C1C9voLUD2+bWoXt82tRO75tage3za1C9vgWoH99Bage30E/ZbjJXEa0AttaAW2tBLbWgltrQS21oJba0EttaCW2tBLbWhFtrQC21oBba0AttONcEVye6Jz+Se6Vz+eayjbhw0DNsU45L6GzCv4nL/v8AJTDkrwd8XW+kGj2c1QKVbcCMTb5T9fhUw9KxdMh4PoPyvU2TJi6Jut0nRR2fmjckCelItm36I6PCrQMYgEIk2Tl5czZzfpX0No98VcrlcqVNBME8fBbpE2/SfIc9z/1Ng/TyQjTwooGniZfGmNXCf7RhNUvV7wE0PogVyuVodKGa/M9ByPsUeGqvgog5yEUDRg5UUYKjl3pmFw/ur816nOlRDUMRRZJWYRVctcULL+55lxQsv7nmXFCyvueZcULK+55lxRsz7nmXFCzPueZcULM+55lxQsr7nmXFCzPueZcUbM7asOXGxBdhK+/tLXc72Fryd7C13O9ha7newtdzvYWu53sLXc72Frud7H9lrud7C13O9ha8newtdzvYTtozDpXlctMeWmPLTHlpby0x5aY8tMeWmPLS3lpjy0x5aY8tMeTjhOFUX9SP/8QAPxEAAQICBgcFBgQEBwAAAAAAAgADAQQFBhESEyAQFRYiMlRzITRSY4IwMTVCRFMjM2GSQ1FigAckQaKyweH/2gAIAQMBAT8A/uUgBR9yCSmT+RQo2ZUaOmYI5OYH3giEh4tD03LMxscegK1lIcy2tZSHMtrWchzLaaeaeG+2d4cz01Lsfmu3FrKQ5ltaykOZbWs5DmW0y+y8N5s7w5IAUVhEsIlhEsIlH2AARlYKl6M+Z1A02HCGU2mj7CBTFGQ4mlW8SCbZEvBkqx8MDqFmrb9N6slVO4H1NIwtQjdHK5Cws4ARldgpSUFgf6vY1koBmlJWJQ/PDgP/AKTrTjLptnxBpqx8MDqFmrd9N6slVO4H1NLcN7M8O7notjdxY5CIR3iRT8tD503Msu8B5a80aMtPhMhwO/8ALTVj4YHULNW76b1ZKqdwPqaWYbuYuFFlFSoXGQhkn5kjeiPyjoAyErYKTfxmbfmyV6lhdonE8B6asfDA6hZq3fTerJVTuB9TQMLUI3c7w2FlFN8AZJmFj7mmTnMC/uLW0PAtbQ8CpWuDVHOgBS168qarkzSUg9LQljG9pqx8MDqFmrd9N6slVO4H1NDI72S3I9Ddyipc77IFknZLE3w4kYEHYQZa2d5Z6eSrPwoOoWat3FLerJVTuB9TQ0O7kM/xMhDeFENhZaMmLRwo5TabPjBOUYyXBuo6MeHh3kbLjfGGitneWenklqWn5VnDZduitoaV+8toaV+8toaV+8toaV+8toaV+8pykJmcuYx3ruSqncD6iGFpIdJRsFRTMbRyPDYWVsyArwqVnW3hgJcWchEuJP0eyfaG6SrnIzDT7JxDcucftqqdwPqJkd63I8W7ZoZKwrMjw2jmErEzSDzfYW8mqQYPi3UJCXDHNNSrM0ybLwXhJVioVyip27/CPg9rVTuB9RNwsHI5G8WgY2Eh0ki7C9gDjgcJpukZgPfvJmkmj7D3UJQKHZkrdR4zlEvFc32t4NNAUZIzMgDjrN4sQlqOjOWBajozlgWo6M5YFqOjOWBajozlgVZZKWlClsELl69kqjC2SPqZCKwUXv0tnaOR4bCyWZ6PmiBzDLhLJOAJyz4R+Zsk8N11wf10VY+GB1CzVv8ApvVkqcP+Sdj5mSy8sJtYTawm1cGHuyPDaORptvDDcWE34FhN+BYTfgU63cfPSxAovBZ/PJMnAGHSj9uKeK884X66KsfDA6hZq3fTerJU3uD3U9qcLC0yTl+XDJOSuOO7xI5Z4C3gUGXi9wKSkibK+fFkrRPjJ0RMx+c9wPVpqx8MDqFmrd9N6slTe4PdT2r0N63TRz9wrhcJeyIhEbxKt9ODSE3gsn+E1/uLTVj4YHULNW76b1ZKm9we6ml4rorEJYhLEJYhLEJNGUS7cjkLR03lJz4xG45xewIhHeJVzp94BCTl90T4zyVY+GB1CzVu+m9WSpvcHuppeK0swxsK1DpijhYWRieea7OIU1STBcW6gmGT9xq8CvAimGQ95p2k2h4N5Pzbz3vVZZGamH2SZZv7i1PSPLOLU9I8s4tT0jyziq/LvS9HADoXSvlmrNJzUyUtgs37t5anpHlnFqekeWcWp6R5ZxVWYelpIweC4WIr4rFFF787R7var4q+KvinbsUKGi3CG2+tUueNaqc8a1U541qtzxrVj0P4y1Y995arc+4tVueNarc8cFqpzxqnZ0aHJmBhfvra6X5Y1tdL8sa2ul+WcW10vyzi2sY5ZxbWMcs4trGOWcW1jHLOLaxjlnFtdL8sa2ul+WNbXS/LGqJnRpJg3AC7dNYCwFgLBWCsFYKwVgrAWAsBYCOFhWIeKCb4IaJsSjciKGB4xxTYO3uBfikFnb+WgB2EAt+4moGJBYMf60MHrj0CCO8peEbx2Du6P8ReOQ9WWTcloS4Qe++gelbwb7d78X/xOuSt7eO8WAX8k4/LwmJY/wAO5h/p4UDkjAmsM/4ZfuT35x6am9we6mQ7yjEryjeW8o3v9FYgyPcaFaymFrKZWsplazmFrOYWspj9FrOYWs5j9FrOYWs5hazmlS0m3SpNRmfkWy9G+Ytl6O8xbL0d5i2Xo7zFsvR3mfuWy9HeZ+5bL0d5i2Xo3zP3LZejvMWy9HeZ+5bL0d5i2Xo7zFR8ozINE2zwrGJYxLGJYxLGisaKxiWMSxiWNFYxLGJYxKJ3i/uR/8QAOxAAAAQBCQUGBgICAgMAAAAAAAECAwQFERITFBUwUZEgITNBUjEyNEBTYRAiYnGCoUKBIyRyoGCx0f/aAAgBAQABPwL/ALTJrSXMVyRX+wrlCuWK5Yr1ZCv9gTyQSknz2FrJCTUYtzGYtzGf6FuYz/QtzGZi3MZmLcxn+hbmMw1EtOHMnEM5hbmMxbmM/wBC3MZ/oW5jP9C3MZ/oW5jP9C3MZmERbK1USPfgRcc1C0aRGc+QvuH6Fi/IfoWL8h+hYvuH6Fi/IfoWL8h+hYvuH6Fi+4foWL7h+hYbWS0JWXYZT+TU8XIG4o+eGTiiCXiPt+ETwHPtgSfxvxxFd08CE8QjAlN6ti15J3FhSM9Th6HNB+RUskhSzVjpWaQ+slQ7n2wJP4344iu6eBCeIRtxTtUw4vIhPPvwpJeq4oi5L3eQcco/cTz+RMpyDrdA/bbk/jfjiK7p4EJ4hG3Lb0yENZ7zw0qNKiUXIwy4TrSFlzLGcXRIdvk1pJSZgpNE5tqT+N+OIrungQniEbce9XRTh8i3FiSK9SYU3zQeMtVI/KxKP5bUn8b8cRXdPAhPEI2o16phnF+27Fkt6qi05K3HivHMWCRGfYCZVmKj3BsqBkZYKinSZbUn8b8cRXdPAhPEI2pbe4bX9nikZkZHkId0nWULzLEeP5sBCaRhKSLYUklBSZjmwXimcVsyfxvxxFd08CE8QjajXq6JcV7zFjSI9O2to/4nOX94iu8eAyXy7Tyd0+DFF8xH7bMn8b8cRXdPAhPEI2Y96phXFc+wv7x5NeqotGR7j8o13C2j7MGK/jsyfxvxxFd08CE8QjZlt6dTbWW8/IQrtdDtrzLybJ/Lt0SyFEshRLIUSyFEshElMyubIUlZmKSuoxOZ89mT+N+OIrungQniEbBiKdrohxeZ7tsinEowlQTBl0TH9ywJEe+Vxo+W8sM+08BCqJgjw4rgL+2BJ/G/HEV3TwITxCNiUnqqFXme4sCTWa2LRkneJTZrIRWad5YEA9UxTauR7j/vDdKZeChZpCVpPCiuAv7YEn8Y/wDjiK7p4EJ4hGxLT07qGuneeBIjMzS3eo5iBkRkZGH2qp9xvI8CCeroZtXtvwnk7p8MnFFzBP5glpPntxXAX9sBh6pXSmn3C8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9i8j9P9g5RMy4f7wITxCPiZkkjMxEO1rzi8z2yKfcIZommG0ZF8JaZovIc6i34EiPcRr+ywjCk0TxSUouYJ5QJ5Jif4xXAX9vOQniEfGVXqqFVmrdgSazWxaMk7z+MqM1sIvNO/AgnqmJbVynmP8AvDcRSIGU2ORzBLx8wlaVCJ4Dn285CeIR8ZZepvk3yQWBIjMza3czmL4mU5GQfbqnnEZHgSe9XQraufYf9Ya2yUFJNPkVrNTak5kDIyPf5uE8Qj4LUSUqUfIg64bjq15ntkU5zCGaqmG0ZFsS0zReS51FvwJEfmU40fPeWJMFM5A0qLl5BbZLLeFJNJzH5qE8Qj4Ss9Vwpp5r3YEms1sWjJO89mVGa2EVmnfgQrtTENr9wW8sY2kmDZUDIyxnm6SfcvNQniEfCWHqcTQ5ILAkRmZtbvUcxf1smU5GWYfaqnnEZHgSa9WwqMy3H5E205A2MjBtqLliPoor++zDMk8uiZ8hdyOoxdzfWYu5vrMXc31mLub6zF3N9Zi7m+sxdzfWYu5vrMXc31mLub6zByeibvHgQniEBxZIQpR8iC1mtalnzOfb7RDNVLDaMi2paZovJc6i/wDWBIj0zq2s95eUNCT5BTOWFEJnb+2zJ/HP/jiK7p4EJ4hAlh6hDUOazwJNZrYtGRbz25UZrYRWad+BDu1Tza8jBGRkR+VWglAymObAWU6VF7bMn8b8cRXdPAhPEIErPVkUZckbsCFi3IY1Ggi35i+ovJGgvqLyRoL6i8kaC+ovJGgvqLyRoL6i8kaA5YiTIyNKNMGS3q2ETmnd5Z4t0+LJ/G/HEV3TwGnCaXTyIwpRqUaj5n5iRnqL6m+otuc8xOeYnPMTnmJzzE55ic8xOeYZP5dtzuHgn27En8b8cRXdPAf4SvMsuG06heRzhKiUklFz2j7TwGT3zbbp/JgK7DP22ZP4344iu6eA/wAJXmpJerIUiPtRu2nS+fAI5glVItpxdI8B85mz2ZP4344iu6eA/wAJXmpHeoRFDkstp8uw8EjNPYEvFzFNOYpJzBupILdNWDEq3knLZk/jfjiK7p4D/CV5ptZtuJWXI5w2sloSouZT7KinLyy1ElM4M5zn2ZP4344iu6eA/wAJW3JsntPtKW4R9u4XPBdKtRc8F0q1FzwXSrUXPBdKtRc8F0q1FzwXSrUXPBdKtRc8F0q1FzwXSrUXPBdKtRc8H0q1DzdU6tGR4EjvU4ahzQe08jn5V5ymfsW1J/G/HEV3TwH+ErbhGqqHbRkWJLTNF9LnJRYEkPVcVR5L3bbjdH7eTeen+VO3J/G/HEV3TwH+Erak5mti2y5FvP8ArFlVmshFZp34CFGhSVFyOcMrJxpCy5lPtGFtTdnkCKcOt0WFnzmwJP4344iu6eA/wlbUiM/I47nuLFUklJMj5h5s2nVoyPAkZ6kwbfQeApojCm1FipaUfaEoJIieA59sCT+Mf/HEV3TwH+ErahGqmHbR7Y0ss0X0udZYElvVUWnJW7CNtJ8gbGRiqWKKstmirIE0sExmYJCS5fF5JraUkshYH/YWB/2Fgf8AYWB/2Fgf9hYH/YWB/wBhCwzjTlJU3ZiH2GLA/wCwsD/sLA/7CwP+wsD/ALCwP+wsD/sHJOiFIMt2oueM+jUXPGfRqLnjPo1Fzxn0aiHkl9LzanKNEjnPfjyhCnEsUU94jnIXPGfRqLnjPp1Fzxn0ai54z6NRc8Z9GoueM+jUXPGfRqCkiNIyMqO73CZ6JT9uNMQmL/wMxSVmYpHmYpHmYpHmYpKzMUlZmKSszFJWZikrMxSVmKSszFJWYpKzFJWZikrMxSVmYpKzMUlZmKSszFJWZikrMUlZg1KmPeYrXetWorXetWorXetWorXetWorXetWorXetWorXetWorXetWorXetWorXetWorXetWorXfUVqK13rVqK13rVqK13rVqK131Faitd61aitd9RWorXetWorXetWorXetWorXetWorXetWorXetWorXetWoeedq1f5Fai0xHrL1FpiPWXqLTEesvUWmI9ZeotMR6y9RaYj1l6i0xHrL1FpiPWXqLTEesvUWmI9ZeotMR6y9RaYj1l6i0xHrL1FpiPWXqLTEesvUWmI9ZeotL/AKy9RaYj1l6i0xHrL1FpiPWXqLTEesvUWmI9ZeotMR6y9RaYj1l6i0xHrL1FpiPWXqLTEesvUSW88qMQSnFGUx9p/E9r7J3Bv+QOech2HMRAy+YtwPiAi+cwfdOcgfDIKOabcXYFl2TcxMVGbnMG+0EZK3TbB9h4TJTuo+4KHXaO58tINpKue3clBokpaN0yn3zEQMlLQdJj7GQmKyzzfzFFZMtUG0nu3ziFJB1tMt0wQ1RU8R7/AJJyDCTqDNKCM6XMOT0znKY9p/hKwW2GrKTJp/yrQayEnJScUkllOUxhUJ/u1Zdw/mI/pEWhq3w5JSVE6AUyda6TjDZMlPvIt4hkoOFjDm7CTMGEOWJBtNIUqmc85CCIlRyqxBdipyDMM2UYgyKdpaTNP/wQbkzyUUEGSll2kIxyd5SKCCJKzIpiEcl5BrosN1c3bMWBJPjkfY/ie0RpLfvCVFvBzcjE6T39gUreQnRPSBK+YzBqnT7if5CIHROYGqcyyFZ83YCMiUYI0p7Ng+w8JpRJcSZ8jBOf7FOfdSnCHUk66rkZGGnE0FNr7pitbbSqgpRmZcxTTZ6HOlODWyttsjWZGksg2tKCdLMtwaiCJpSVZTEG1t1JoUoy+acLo0txzltP8JWAijSTS7J94VKP+wS0tool2HNvmDb7CI1bhT0DpfsFGIKEozf5ZqJH9Jh2IbVEQ6ynmQlE/wDQtEGmIW+S3DM5/lmDL6EsRST7VzTf0EOw6oRDS1qSZLM9xCGdaZiVKnM00TKcQMalmklzu9qfYwyskPoWfYSpw8slvuKLsNRmIpcI8taydXOZdk2BJPjkfY9iqWKlYqVipWKlYqVipWKlYqVipWKlYqVipWKlYqVipWKlYqVipWKlYqVipWDZXMLC/wCwsMRkQsMRkQsL+RCwv5ELDEZELC/kQsMRkQsMRkQsMRkQsMRkQsERkQsMRkQsL+RCwxGRCwRGRCwxGRCwxGRCwv5ELDEZELDEZELDEZELDEZELC/kQsL+RB2T4lSDIptRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRc8bknUXPG5J1FzxuSdRASdEsRKVrmmmPn/2kv//EACsQAAECAwcFAQACAwAAAAAAAAEAESEwMSBBYXGB8PEQUZGhwUBQsaDR4f/aAAgBAQABPyH/ACSn/kH/AH1AER0BKJXKe2FkrIQvAQ7lLq4VECxQgAcrH+Fj0x6ccuOWPTH+E64uz0mMHWO8LHpj0x6Y9MenHIaKdhIKCYewwLjwtuFtwuPC24W3C48LjwuPCL7RNfxEtVAwiVbZLvtdqFAgyZq5vkz0Ube/lIgw/ClOpmg0P4RkUeiYdp+TdkwGmRVzfJnoo29/K2E7g5lEiJVMTrKfUwPO78AAYISJyfwgIDQhii46ht1c3yZ6KNvfytsmatIUlwlC4NFTKGfM4Dt9yJJOT+MqJEKVRaq5vkz0Ube/lbbUxPFMdk3DIzSWTifH5YAG6BtVc3yZ6KNvfytRCiG5iqlzMZJP3qTYL3k0UiqgOiNQgqAENJGYvCIYkG6zVzfJnoo29/K1TTuhNEwsScaIT+/rLKdb2kFa8oCwFgdEIhik56j5s1c3yZ6KNvfysmAddp/AE53EdAmDfMkNO72nMKRcmO+/pZq5vkz0Ube/lZwgak85SfrSzRGpnAXMSQrzs1c3yZ6KNvfyssqaP9U8Eggioj4Q3Lu5iUaI3yHmdreCWCWCWCWCQGZeeXOI1xGzVzfJnoo29/KwQAJuR7h8IUtkIAVMBqmoQMgT5qrSvliwsZEd8oBAIl+zkVc3yZ6qNvfysP8AB+tIjMXnRQqPjSIyRNKWcMYycn7KimV7eR7T5M9VG3v5WG6oGoZDlCOgBU2CGOqMYvwMpAnWMGYSnmLpnBXFTwt+3kPHZO0wExEBCxCIB2SG/l1pgAOUQ7fkZWyEAqSw1QE3b59GhEGswkVk7oygBBBRiAzaISCqAVWoIAaHr7P9m/l1ZYNz1rIjEfC6uBrnpIcU/wBAgLyswuRCYzyUEoOEQVEOn7Z38urbG8ZmQ53yB1GcoQx1Ryt+NJEQIBqSwLHui0Rr+AQRrxLAKbwMf17+XSiw4dEZZrnzbIAKmA1Qu0r5mw2Yg1mEhxVH+6YQMChmK138Br1XFH4Ij9W/l0bAxPC+REI+FZhEXPSQfsUeRRABE0gFUwMUNSKqgM6PDA/Vv5dIONBqZDjD+gshHKAx1RiIrgSHeT8b8DAovqCmcuMCkVkhIFcMFvwtiFsQtiFsQtiFsQtiOg7ELchDkZP6TxidFWcMWtsAkAKksNUMLdvnfaZ8QaOcg7lB1B+Ssgu/0RBBYiTGO57PsPkz1UZFbBNBoKyGGR8a3CIuekgg27Ol6GyhDjX8oTHujvJGIllVzfJnqo29/JMeYDc75BUMwkh2tkIQhCNdBDHNqr5EQm96SXFh5MN2yDFGpsVc3yZ6qNtwaGeAqijh1/Q9BhCzFo0RfMSx/lY/ysf5WP8AKx/lY/ysd5RDF3tjISqmdirm+TPRR/gAA934Kk4AI1sP096Q2fdbaLGQTdtZVc3yZ6KP8CH3RH5XWmCxkEIEXIYDZJZUmgkZ/h5s1c3yZ6KP8CH8z9AnocckVSyB6CsIr6dQKgkviUiOtmrm+TPRR/gRXEF4KgMMNbL+EQQSDd+UqPRGMVTZq5vkz0UZwu2y0tRchXIVyFchXIVyFchXIVyFchR/6lHL34kRYaDQ0tXHX8jwUNFoq5vkz0UZoAcgCpXc6LnMYgXrMSGQjA8hRCyQ4ijE4/EdRhoXnvbq5vkz0UZogREmx6AXPSRVKYaKigPytACGKNFGO34CEwCcKQ1c3yZ6qM0NEXvFNpDAx1RT348SH+MYGRkRsQKuF5lV2wECYCTPtPkz1ZoAcgBDvYR5mc1ghFzEhoEwX/JlgILnRBfTdWJuQNfRVzISKT1VRDAtsrbK2ytsrbK2ytso9gIZguDBbJW2VtlbZW2Vg+awfNCeI0wkYScJOEm7oMchOhxYuLCRhqw0YScJOEnCTGak4yrLYPnYdOn6unTqCYdlgBYATCy6dOn6OnCcJwnCdOnCcKCdQT9HUE9h04ThOnTi2/5X60LkujcsuW6FyVgiLE9CxPlY3zIIiIiLErErAF3Ub7FzRc0XNFzRc0XNFzRc0XNFzRcwXNFzRc0XMFzRcwXNFzRc0XNFzRc0XNEOYDbEuRrka5GuRrka5GuRrka5GuRrka5GuRrka5GuRrl65GuRrka5GuRrka5GuRrka5GqLXRCOtFohhALUDmCgghIRAH/AFEuDlqpige5CIMUJtu8EBeEDcgDmKZiGi7ygh1w7IUmJyEPcXIy4MCFTr60oAZDuKibNGiJGxg0MkH2cSoodBaHZB6w8L6JwODyAIgQWPOCCIAHlwKNhr4LkcJ3gE9mBjtXjsELi4kHJPBUcwigmUoLi5TXNMEAtSiKsSX01EVCVSQjDVXieZhBAJPejd/ROYKhj17JjoVDMDeoCyN+pI2ft1oNokAORAF94TBDiJbnK9OkFBRE1Z+yjC8H2gCBooiJ7AonxJgG8IUIwI1GMj1cfqcC4m5P19SVQGcKDUf1EXFHEO6DAmoCKghMJpj0AFB44pNH8lu5HgTTSpe8udye0TEAdABP9w2vTkZEtCrxIBqfVXCSQjAjgyYS5BORrxUbVAhAvqgrluHSJPR9LtVDxqZEuOya28ZLzJ+RiWQKeiZmRKHlQlOAzQt7P26miwwsELACwQsALBCwAsAeVgBYAWCFghYIWAFgBYIWCFgBYIWAFghYATtALB81zC5hc4ucXMrnFzK5lcyuZXIrmFzq5lciuZXMrnVzK5lcyuZXOLnUE55/Y3ve973e9733e+973fe973vY6m6Dv8pL/8QALBABAAIAAgkFAQEAAwEAAAAAAQARITEgMEFRYaGx8PEQQHGRwYHRUGCg4f/aAAgBAQABPxD/ANAN/wDSSLl+ly5fpejbpXL1t6Vy/wDhlxvDcLjlIRWQfLF5BON9Jx/pNpEfZTaQ4kz0f2X6oDV4C8J5XPOp51POZ5zPOp5XE7xsFGGsBFkFsf8A6eedTzqedTzqedTzmIdZIohlpj+501DabSd4/s8J/ueE/wBzvj9nhP8Ac8J/ud8fs74/Z3x+y7CL4PZBCoDey9xHKYAg3GEtxXUljY0yuq5ucYMGK+oBY2Tnumzvu/WOe9Jm0+YevTWpYL21JZRm0X3nsGXZW7AzY0sNgZStc9g3tKJqxHe0Q0md/wB+sc96TNp8w9em2FLP0CMSqqO11TAvYubXmW6tGBG6Fdr7G6a1Rum83itJnf8AfrHPekzafMPXpudXylGrW+mbiriCD8LRia1iLaYCPbi5+zHPBydzvhf0mPHRZ33frHPekzafMPXpOAsu4f4zDq2Y2Vj7ZrSCuQWx1cjAe0YaZiv4bHRZ33frHPekzafMPXpDUBH0RFUS1bV26zAGD+mtFcOLr+Q1DFIsMPiDGfP9TFTN2UVVLUMyVmI+elToM77v1jnvSZtPmHr0XKMGfX09aUcAhsVZMtMkbto1ht0PPUARYGKg8QaDs+J2kzOTJ3mpAhgIGgZ33frHPekzafMPXosRNBisQ1vpua4L81Yplvdq1A4PFTLRIQY9MNNwihtx9tBnfd+sc96TNp8w9ejQTS5cny3rsEx34pGzVLE8I7beuo5aGie+hI4KbsNLGY8ZhbSz00Gd936xz3pM2nzD16OUk3yuA17togE2KuEUKB9Z1RxfEz/J1AvtuXopPATx08dPHTx0TwESIVPJZ5lKiuMrb0Gd936xz3pM2nzD16CtQAquyO5tB9LTAfagb2KWQTnyOozZf7bDVHKMlsWoU9hwhuLGXq3mkztu/WOa9Jm0+YevQSvi/pJlp15X4sm/31FORhpqkjkUg2WaptzwNSphjtKGmC7nP2R+279Felc5r0mbT5h69BnN6i2OARgklaA3kFC1xpmNO0xGkxHdMRZn6t1SCWOb4hqcmxR4TI7G5xjyq3eTkicGDeWuOoASqrvHCcHPCzwM8DPAzw88LPBTwM8JPBTUOWi4cXT5h6/Vygcm4IlC/BNjTB1RAbXAQzKo8x9MPrUG/wCPdMaoWsEpgFYXg8NZkygrSvCPpmCJfHKHiSQ98/mHr9cBZj48zUUSxoTL0rSzHxwVWGng2A/RMICNiXqaguGBzRKVJsg65axPBiIPE2wDDv7TnvvOYev1S27OodZcZjXoVdoDeQWSI3G2GovZPJ5qql6cBkJTMLcyZeuqJViibSU3Iowx4x20Mx93zD1+iUU5twLl7J+LFgfWmAtqBvYPxif7D61G1Hxup2g+cwGrYSgI7GDKU7nKM0wbzKW694FEw8xlBTmHuuYev0atinmg06/ezKaFpvqmMTTFLQRx4DFGsQR3mrfQCkGNrxAjKsH0xOja1gMO2W83ThtPc8w9cupRW9QNnVDoge9oDeConIxZtMx+nTZj7E/Nr7nElIMx9A7zCHi/xSbXJvMYiNBHcy9TsgKVYLg7dEq2Iua0b9S6UpSlKXcnrIVnmhdky0+YejF+pu+FxsVvzivTMuwAbWCmpHxZ1osTUBfrb+zcowDGO+sYoXZxRcgTY6kkJiX8TZ6s7Pv1jmvSZtMfc9GBUR0f2gyNPHoX+UhWlaDWIsNmWm3ebckMGIkNp7RUqyVsCIgpNRx8emgzvu/WOa9Jm0+YeqYoxeY1AL3CBQ2DEnkX+zyL/Z5F/s8i/wBnkX+zyL/Y+C8rZYIW01V7DUOK9n4dJcsl+hZLJcpLg3pMNAYqmGkwUTeJDRbl9Wd936xzXpM2mdpttualH3hEutzb1X7jDev6TNo4SqV4u1nlU8qnlU8qnlU8qnn0d2VKWunZ8UM3S2xURWvF6s77v1jnvSZtPC5nR19ykOPzQsT6iii9cBZonKFBSkWoFJwFnzL0bhl2oCBpbYbmSPKXeO/1Z33frHPekzafLnU90lydYFpJhaMWozClZCo/JudEBa0GcqBbri6jirC0DO+79Y570mbT5c6nukruuTMtG2nZg6nDkd2+AAi3mU/VMTLfugylm4lgfgM2Got5gf00DO+79Y570mbT5c6nuksQNXF/kXi2TgL0TbMzDgwGKVT7XLVDBvYptra6DO+79Y570mbT5c6mm0qNJcI1cUUUUUUU0UVNqAH6Jd7S8HUXdtfPaRhrzw/1Bt9mgSoBm7pXu3UcXfos77v1jnvSZtPlzqaSErSg3sEkoP8AbFlSpUqVKlSpUqJhMH6nqHfsLf2Rk0TYojsmZZcvZINtbbYb4F9rd8StFnfd+sc96TNp8udTSsUP8RAUatmIM58GoJTRkN6uLEP0ppLwsYqk7TaPYBlK7CHTW2uENJnfd+sc16TNp8udTSAvifwa2DVtLgKhQo/NiwfrUYn+lWypdhxSYmobzGZ6q4CqC3cSlf1Mwqus57qO279Y5r0jn63Lly5y51NFCFqgG9lJ6G/cYa3B2qah4b7vmcVp36JczyjvMI4r/FJj9RwZmgxQ4ifz1sYJ+CZekzEjiweKvAwgmEPOGHpXLfLNFw3Hf8TgR4U+F984H2zhffOBHOEGFttSGrYzNQS2PC+2cL7ZwvtnA9UYbo0FXos85w+KwLDWITJL1pSi6/RNRmdec5w/iR9hVkOEhho2YMfW/RSUly/UpMU4L1zgcgmEuXLJSUlJSXKaIBSU9QuKS4pLPRcUlkslm+U9QpKepcuXLlnosly5csly5cuXLJZLly5csly5egwL4jc9RPOM84nnE8wy5/RPMM8wzzDEv9WeYZhfqnkU8wzzDPMM8wzzDPMM8wzzLPMsMwDbG0x3ef2dufs7c/Z25+ztz9nbn7O3v2dvfs7c/Z3Z+zvz9ncX7O/P2d1fs78/Z3t+zvz9ncX7O/P2d/fs7c/Z29+zt79nbn7O3P2J+AUhbZ23+ztv9nbf7O2/2dt/s7b/AGdt/s7b/Zj1622333++nfbf76991l6B9999t/s7b/Z23+ztv9nbf7O2/wBnbf7GFBVoh6ZvxHN+dDaSo4GZwaRW0JljGlzgUQlJzElrDRcsvYuCqCqlTDWgUphHB8mEpZgkWsuEgAKzbCeGPgGVLxU/5EVDTaTbEJ6jQpuJZHMfXmXSbXUlCA0cnGGDxJzpi3RbuuhgWwg6wcoOdptibnMKm3EvKZfkYONRiPatN3xYpykA3sagyAvLvISBctFDkxziarUDAPrS5U6mpaDdYYKMg/03swbDwOLYTGv8IeetUKVzIh+OAAxC7uO65FdiyY9/WHBDfhSmgZqnIJQcRVDHa4uHVnCMFWNmDY2DFBcgyfYbiLbu7hgaiI9OQjm/MuXLlw+hDElixraDBRdSysRu0qpblpgMllMEyTAK2Tg2wxqoDGtuLeQ4rasOJJoDOLLVEDbUyWs1aY1Nj2QwxhZFGklBLOLnLlxfdmSy5cuXLly5cVxCobrgy8V+zdEubRMVvCJiofNtMv2Wrchvg32RSsKqs4iAAWCw5he9Zt7d0F66pLw2kUPgckqoUVrAqX+S5cuXLnKOpqKGaYuFuLGGK6tq4FDkYqIBbIthUYb2ehhS4umJIxG6hBrroLjVLBRI4FhRRZh46SoCtpHTdOq1QtoSiwQWEn0jMrV+W4hwmaurKbCYQUkTaQAXGQ1ER6FUG0iyu13zyE8rPKzys8zPK+ivOzyk8hPIzyEt/wBZ52eRnkZj3i/M8hPKTyM8rECWohjFl1dnNa4rjGMSJNbNMYxjmMYxWlVMQLpqTGMYxjKPZyUoRpKMYxlGMYxjGEfMW1aUaGMx9jjMfUlGpqVKladSv/TH/9k=";
+
+const SD      = [{"name": "ALBITA 157", "zone": "01", "employees": [{"ci": "16842064", "name": "ERIC RIVERA"}, {"ci": "15370018", "name": "SALIN SMAHIN"}, {"ci": "15870003", "name": "MARIA IBARRA"}, {"ci": "23662217", "name": "GENESIS ADALFIO"}, {"ci": "15377253", "name": "MAIRA VALERO"}, {"ci": "15131061", "name": "LUIGI SOPRANO"}, {"ci": "22886847", "name": "RUTHMELIS PEREZ"}, {"ci": "22546265", "name": "TROYA GENESIS"}, {"ci": "17426112", "name": "MONICA GONZALEZ"}, {"ci": "27941975", "name": "KLINSMANN MARTINEZ"}, {"ci": "28052389", "name": "JONHSON CORRALES"}, {"ci": "29756591", "name": "NATHASCHA PEREZ"}, {"ci": "29720907", "name": "ALEXANDRA MORENO"}, {"ci": "21516011", "name": "ERICK GUEVARA"}, {"ci": "19650674", "name": "DORANGELLI PALMA"}, {"ci": "30507642", "name": "NICOL MOLINA"}, {"ci": "28308541", "name": "HECTOR MARTEL"}, {"ci": "29619985", "name": "ERIKA MORENO"}, {"ci": "30687056", "name": "STEPHANY FERNANDEZ"}, {"ci": "31186574", "name": "DELMARIS CARDONA"}, {"ci": "30974993", "name": "MARSSEL CHACON"}, {"ci": "28424719", "name": "JESUS NIEVES"}, {"ci": "28065491", "name": "MARIA AVENDAÑO"}, {"ci": "30654986", "name": "EYMY HERNANDEZ"}, {"ci": "30154376", "name": "JOSE RAMIREZ"}, {"ci": "25232561", "name": "FREYA PARILLI"}, {"ci": "29832396", "name": "ENMANUEL RIOS"}]}, {"name": "AMBAR 140", "zone": "01", "employees": [{"ci": "15800017", "name": "WOLFANG PAEZ"}, {"ci": "19023398", "name": "STEFANY SIRA"}, {"ci": "23691545", "name": "HAYDEMAR JIMENEZ"}, {"ci": "24593496", "name": "JACKNELYS GONZALEZ"}, {"ci": "29518567", "name": "ANDREA VILLEGAS"}, {"ci": "9099439", "name": "MARIA RODRIGUEZ"}, {"ci": "30511042", "name": "YORLENIS MARQUEZ"}, {"ci": "30375690", "name": "CESAR SANCHEZ"}, {"ci": "27814910", "name": "JONATHAN SILVA"}, {"ci": "29863534", "name": "MARIAN FUNG"}, {"ci": "26967957", "name": "JOSE OCHOA"}, {"ci": "27346234", "name": "GREIKELLYS LAYA"}, {"ci": "28149990", "name": "EIMMY CASTILLO"}, {"ci": "27535582", "name": "JAVIER MORENO"}, {"ci": "27346102", "name": "JEIBELY RONDON"}, {"ci": "27667538", "name": "MARIA SANCHEZ"}, {"ci": "17705942", "name": "JORGE APARICIO"}, {"ci": "17977075", "name": "NOMAR VERGARA"}]}, {"name": "CARLOTA", "zone": "01", "employees": [{"ci": "6891504", "name": "ANGELI DE HERNANDEZ"}, {"ci": "19817829", "name": "GERARDINE ANZOLA"}, {"ci": "14726857", "name": "JAIBETH CASTILLO"}, {"ci": "19874840", "name": "GENESIS RODRIGUEZ"}, {"ci": "24295373", "name": "ANDRES ALVARADO"}, {"ci": "17429432", "name": "JORMAN ARIAS"}, {"ci": "82196246", "name": "ALEXANDER FLOREZ"}, {"ci": "21103238", "name": "YORDY PAREDES"}, {"ci": "24888100", "name": "GENESIS LAYA"}, {"ci": "18183751", "name": "MARUZKA MENDOZA"}, {"ci": "27449122", "name": "LUIS RUIZ"}, {"ci": "27254822", "name": "LEONARDO ALVAREZ"}, {"ci": "30103119", "name": "EILEEN SANDOVAL"}, {"ci": "29917742", "name": "SOLEIDY ROA"}, {"ci": "20793995", "name": "ALBERT MARIN"}, {"ci": "27376629", "name": "KELVIN AGUILERA"}, {"ci": "30098581", "name": "BARBARA RUSSO"}, {"ci": "30769113", "name": "ANELIS JARAMILLO"}, {"ci": "29935737", "name": "MARIANGELIS GUZMAN"}, {"ci": "25352608", "name": "EDUARDO CASTILLEJO"}, {"ci": "26421458", "name": "ELVIS ALBORNOZ"}, {"ci": "27235479", "name": "JEINSSON MENDEZ"}, {"ci": "29677347", "name": "BETZAY HERNANDEZ"}, {"ci": "29702160", "name": "NATASHA CARRERA"}, {"ci": "31160136", "name": "ANTTUAN LIEBANO"}, {"ci": "29832249", "name": "EDITGEY CASTAÑEDA"}, {"ci": "29923125", "name": "DANIEL CHAPARRO"}, {"ci": "30473835", "name": "GABRIEL PINCAY"}, {"ci": "29639106", "name": "YOELBIS PENA"}, {"ci": "28443130", "name": "SCARLET CASTRO"}, {"ci": "30715934", "name": "VERIUSKA FALCON"}, {"ci": "12260388", "name": "RICARDO PEREZ"}, {"ci": "27342011", "name": "CARLOS GUERRA"}, {"ci": "22968902", "name": "NOHELIA SANCHEZ"}, {"ci": "29686842", "name": "ANTHONY MARTINEZ"}, {"ci": "30136655", "name": "VALENTINA GUARATE"}, {"ci": "29571217", "name": "MARIAM GOMEZ"}, {"ci": "28471423", "name": "VICTOR RAMIREZ"}, {"ci": "20431147", "name": "ANDREA DE JESUS"}, {"ci": "30887909", "name": "DANIEL GUEVARA"}, {"ci": "27159875", "name": "MIGUEL GUILLEN"}, {"ci": "31549390", "name": "DAVID BELEN"}, {"ci": "31728216", "name": "ORIANA ALCALA"}, {"ci": "31081857", "name": "YOELSI BERMUDEZ"}, {"ci": "30165518", "name": "GLENNY ROMERO"}, {"ci": "32114514", "name": "DANIELA VILLEGAS"}, {"ci": "30495846", "name": "CRISTHIAN LOPEZ"}, {"ci": "20799620", "name": "JENNYRETH LOPEZ"}, {"ci": "27254115", "name": "DANIEL GONZALEZ"}, {"ci": "31838583", "name": "DOUGLEIKER PEREZ"}, {"ci": "30483954", "name": "ADRIAN LINAREZ"}, {"ci": "30771447", "name": "THAIS COHIL"}, {"ci": "30124277", "name": "CARLOS RODRIGUEZ"}]}, {"name": "CUARZO", "zone": "01", "employees": [{"ci": "11969134", "name": "YENNYS QUIJADA"}, {"ci": "19851942", "name": "KAREN ZAMBRANO"}, {"ci": "17531314", "name": "MARIANA MARTINEZ"}, {"ci": "25220308", "name": "STEFFI ANGULO"}, {"ci": "23617242", "name": "YURAIMA RAMIREZ"}, {"ci": "23340190", "name": "LEYMING NUÑEZ"}, {"ci": "29743803", "name": "KASSANDRA CHACON"}, {"ci": "26558907", "name": "LUIS BECERRA"}, {"ci": "6858633", "name": "GLORYS ALVAREZ"}, {"ci": "26952305", "name": "HIDEKI CORONADO"}, {"ci": "29536408", "name": "LUIS PERRONE"}, {"ci": "30142060", "name": "MICKEL RAMOS"}, {"ci": "30507562", "name": "MARY MARTINEZ"}, {"ci": "28410517", "name": "JHOYFREN FLORES"}, {"ci": "26178703", "name": "ONETZY MESA"}, {"ci": "20822635", "name": "PEDRO HERNANDEZ"}, {"ci": "26809813", "name": "FRANKLIN PADRON"}, {"ci": "29875856", "name": "KELVIN FLORES"}, {"ci": "5093568", "name": "MARIA DOS SANTOS"}]}, {"name": "INDIGO 141", "zone": "01", "employees": [{"ci": "14991023", "name": "JENNY DE MENDOCA"}, {"ci": "16618736", "name": "BELGICA ZEPEDA"}, {"ci": "5978558", "name": "JOSE RODRIGUEZ"}, {"ci": "15691526", "name": "NAIBETH OROPEZA"}, {"ci": "24460638", "name": "JHONATAN SIFONTES"}, {"ci": "26063975", "name": "JOICE DELGADO"}, {"ci": "14907826", "name": "YURI SARMIENTO"}, {"ci": "17518379", "name": "TIBISAY BARRIENTO"}, {"ci": "26078462", "name": "JESUS CASNEIRO"}, {"ci": "28336785", "name": "LUIS RODRIGUEZ"}, {"ci": "27879692", "name": "GABRIEL GRANADILLO"}, {"ci": "30946750", "name": "ALCIMAR ACUÑA"}, {"ci": "24216130", "name": "KARINA RUIZ"}, {"ci": "30011345", "name": "CRISTHIAN LIENDO"}, {"ci": "27200537", "name": "AARON REYES"}, {"ci": "29935708", "name": "LUISANA LEON"}, {"ci": "27342835", "name": "ORIANGNI RIVAS"}, {"ci": "13156126", "name": "MARIA BORGES"}, {"ci": "31363234", "name": "JOSE GARCIA"}, {"ci": "30063373", "name": "DAVID VARGAS"}, {"ci": "30409359", "name": "DIANA CELIS"}, {"ci": "31109560", "name": "ORIANA GUZMAN"}]}, {"name": "LA CASTELLANA 126", "zone": "01", "employees": [{"ci": "19511014", "name": "NELSON FERMIN"}, {"ci": "17124191", "name": "DANIELA RAMIREZ"}, {"ci": "11227426", "name": "GERARDA CAPPIELLO"}, {"ci": "23690769", "name": "DARIUSKA LOPEZ"}, {"ci": "23618472", "name": "KAREN MENDOZA"}, {"ci": "27784965", "name": "JESLY PEREDA"}, {"ci": "28301186", "name": "YUSBELLYS CHIRINOS"}, {"ci": "27776340", "name": "ERNESTO DIAZ"}, {"ci": "28136290", "name": "ONEISCAR GOMEZ"}, {"ci": "24982770", "name": "MIGUEL HERNANDEZ"}, {"ci": "29969915", "name": "BARBARA CUICAS"}, {"ci": "26717526", "name": "JESUS GARCIA"}, {"ci": "27814000", "name": "ANDREA GUERRERO"}, {"ci": "26029508", "name": "MARIANA BALLESTERO"}, {"ci": "9965000", "name": "FATIMA DE SOUSA"}, {"ci": "19195816", "name": "DIANNY MUJICA"}, {"ci": "27783125", "name": "GEREMY FIGUEROA"}, {"ci": "16653731", "name": "MARIA PEREZ"}, {"ci": "29692945", "name": "XAVIER CORTEZ"}, {"ci": "28337881", "name": "SERGIO SALAS"}, {"ci": "28174318", "name": "FABIANA CHIRE"}, {"ci": "18934180", "name": "LUZ CASTAÑO"}, {"ci": "27451962", "name": "RUBEN CORDERO"}, {"ci": "29898212", "name": "ORIANA BLANCO"}, {"ci": "25703247", "name": "ROSBELY CASTRO"}, {"ci": "28332261", "name": "ANDREA ROMERO"}, {"ci": "30568409", "name": "MAIKER BRAVO"}, {"ci": "25525431", "name": "GABRIEL TOVAR"}, {"ci": "26597620", "name": "DONAIKEL VELASQUEZ"}, {"ci": "27448799", "name": "ANA MATEU"}, {"ci": "27916322", "name": "EDGAR MOLINA"}, {"ci": "27913942", "name": "JOSE HERNANDEZ"}, {"ci": "20302598", "name": "ANNA SANTELLA"}, {"ci": "28682317", "name": "MARIA ARROYO"}, {"ci": "29619907", "name": "BRYANT GALDOS"}, {"ci": "32029838", "name": "WILMAR BUITRAGO"}, {"ci": "31460091", "name": "BELKYS FERRER"}, {"ci": "26473279", "name": "ZORIBEL PEREZ"}, {"ci": "24190944", "name": "LEIRY VERA"}, {"ci": "30330308", "name": "STEPHANY GUARAN"}, {"ci": "26998045", "name": "NATHALY CASAS"}, {"ci": "31453760", "name": "KEINER RUIZ"}, {"ci": "14744164", "name": "CAROLINA ORTEGA"}, {"ci": "26411173", "name": "GABRIEL GONZALEZ"}, {"ci": "29741720", "name": "YULIANNA MAZA"}, {"ci": "29883212", "name": "YEINNALYS TORRES"}, {"ci": "28448377", "name": "GABRIEL CARRILLO"}, {"ci": "28441458", "name": "YASMAR SALAZAR"}, {"ci": "26868668", "name": "ANA VILLA"}, {"ci": "27099012", "name": "YULEIZY LOPEZ"}, {"ci": "24233008", "name": "WINIFER CORDOVA"}, {"ci": "30032070", "name": "JONAIKER GUTIERREZ"}, {"ci": "32951077", "name": "ANDREWS RODRIGUEZ"}]}, {"name": "LUZMAR 142", "zone": "01", "employees": [{"ci": "14834783", "name": "YENY TERAN"}, {"ci": "13078283", "name": "MARIA MESSINA"}, {"ci": "12718745", "name": "LUZ TORRES"}, {"ci": "19583956", "name": "GERARDO ALVIA"}, {"ci": "20802502", "name": "SANDRA GUEVARA"}, {"ci": "20363578", "name": "LOWSUA SUAREZ"}, {"ci": "18041803", "name": "DIANA BARRIOS"}, {"ci": "17074943", "name": "YESSENIA TORO"}, {"ci": "18002298", "name": "ALEJANDRA ARREDONDO"}, {"ci": "17802472", "name": "LISBETH VILLASMIL"}, {"ci": "17498990", "name": "YANIXA OROPEZA"}, {"ci": "27659679", "name": "PATRICIA PAIVA"}, {"ci": "26787775", "name": "ISABELLA FONDA"}, {"ci": "27796606", "name": "ISAIAS RIVERO"}, {"ci": "26733338", "name": "GENESIS QUEVEDO"}, {"ci": "27042748", "name": "MARIA MONASTERIO"}, {"ci": "21104127", "name": "DEYBIS YLARRAZA"}, {"ci": "30673722", "name": "LEONARDO RONDON"}, {"ci": "26122485", "name": "DEIVY SANTANA"}, {"ci": "26299278", "name": "ANARVELIS MILLARES"}, {"ci": "27615226", "name": "EDGAR RODRIGUEZ"}, {"ci": "27788714", "name": "YERLY HERRERA"}, {"ci": "28490298", "name": "CARMEN NAVAS"}, {"ci": "30888817", "name": "ASHLY RODRIGUEZ"}, {"ci": "27086107", "name": "ELENY PEREZ"}, {"ci": "27810423", "name": "VICTOR PEREZ"}, {"ci": "28751615", "name": "JOSE SUCRE"}, {"ci": "30888788", "name": "JEREMY BASTIDAS"}, {"ci": "27127621", "name": "KENYERBEL SANTANA"}, {"ci": "26473378", "name": "EDGAR RICO"}, {"ci": "32257094", "name": "NICOLE COPOBIANCO"}, {"ci": "26751391", "name": "VICTOR SALAZAR"}, {"ci": "30372954", "name": "MARCK DUARTE"}, {"ci": "31305274", "name": "EVER MENDEZ"}, {"ci": "31193421", "name": "JUAN FERNANDEZ"}, {"ci": "26271572", "name": "OSWALDO ANZOLA"}, {"ci": "31408088", "name": "ROSANGELA MONROY"}, {"ci": "26731019", "name": "JOMHNAYS RAMOS"}, {"ci": "30154029", "name": "JESSENIA QUINTERO"}, {"ci": "27333630", "name": "YELKALY TOVAR"}, {"ci": "29987394", "name": "ARIADNA ZAMBRANO"}, {"ci": "31313339", "name": "JEREMIAS BOLIVAR"}]}, {"name": "MELANIE 119", "zone": "01", "employees": [{"ci": "19200076", "name": "RICHARD GONZALEZ"}, {"ci": "19650329", "name": "MAHOLY GUILLEN"}, {"ci": "17705486", "name": "MARIA ALVARADO"}, {"ci": "20221605", "name": "JENNIFER HERRERA"}, {"ci": "18377737", "name": "YOELIS GRATEROL"}, {"ci": "17530901", "name": "EDUARDO SUAREZ"}, {"ci": "20791626", "name": "KARLA RAMIREZ"}, {"ci": "18276197", "name": "SERIS NORIANT PLAZA"}, {"ci": "26447375", "name": "MIGUEL SILVA"}, {"ci": "15378291", "name": "SCARLETT VITALES"}, {"ci": "22382775", "name": "MARIA TOSCO"}, {"ci": "28324774", "name": "FRANYELIS CANELO"}, {"ci": "24464506", "name": "IRINA LANDAETA"}, {"ci": "12172452", "name": "HARVY J. GONZALEZ A."}, {"ci": "27671826", "name": "LAURA MONTILLA"}, {"ci": "30470227", "name": "OSCARLY BARRIOS"}, {"ci": "27588850", "name": "VICTORIA OCHOA"}, {"ci": "28337955", "name": "RICARDO CONTRERAS"}, {"ci": "26728827", "name": "SABRINA PEREZ"}, {"ci": "27916247", "name": "STEPHANY VIELMA"}, {"ci": "24410920", "name": "YAQUELIN DELGADO"}, {"ci": "26838012", "name": "ROYNER GUILLEN"}, {"ci": "28429727", "name": "YURIANDRYS MORENO"}, {"ci": "28301652", "name": "ANA BURQUILLOS"}, {"ci": "31838585", "name": "ORIANA CONTRERAS"}, {"ci": "29678563", "name": "MARIA GUILLEN"}, {"ci": "27704127", "name": "NICOLE HERNANDEZ"}, {"ci": "25305951", "name": "MARIA MARTINEZ"}, {"ci": "26063583", "name": "CRISAIDY CUELLAR"}, {"ci": "28303788", "name": "VERONICA TORRES"}, {"ci": "27321977", "name": "ILIANA RODRIGUEZ"}, {"ci": "26472836", "name": "YOSCAIRO APONTE"}, {"ci": "27588954", "name": "ANTONIO DIAZ"}, {"ci": "21345864", "name": "VICTOR BARRIOS"}, {"ci": "28524734", "name": "RAIDER SALAZAR"}, {"ci": "30888676", "name": "DARIANNY BASTARDO"}, {"ci": "27588094", "name": "LASMICK VALVERDE"}, {"ci": "28461410", "name": "JAVIER RIVAS"}, {"ci": "27918220", "name": "JOSE PAREDES"}, {"ci": "26159464", "name": "ROXANA RIERA"}, {"ci": "29992094", "name": "KEIVERLIN LEON"}, {"ci": "29992119", "name": "RITA BONILLA"}, {"ci": "26552159", "name": "JOSE TORRES"}, {"ci": "31255293", "name": "MIGUEL COTE"}, {"ci": "30436372", "name": "LONJINA GONZALEZ"}, {"ci": "23636479", "name": "LUIS CARDENAS"}, {"ci": "31385792", "name": "KARLA SÁNCHEZ"}, {"ci": "30715666", "name": "SOFIAMOR TUPANO"}, {"ci": "26557538", "name": "MARIA EL JERMANI"}, {"ci": "28261737", "name": "DALIMAR GONZALEZ"}, {"ci": "31185394", "name": "ORIAIMELYS RUIZ"}, {"ci": "28317622", "name": "KEVIN GELVEZ"}, {"ci": "30926096", "name": "KEVIN BARRIOS"}, {"ci": "29719153", "name": "LUISANA MARTIN"}, {"ci": "30156140", "name": "JOSE CONDE"}, {"ci": "27753404", "name": "YANILEEN BONILLA"}, {"ci": "32298182", "name": "PEDRO SUESCUN"}, {"ci": "29656610", "name": "ALBERTH LATOUCHE"}, {"ci": "31003982", "name": "ROBERT GUZMAN"}, {"ci": "32337035", "name": "MIRANDA PEREZ"}, {"ci": "23707260", "name": "ARTURO GARCIA"}]}, {"name": "MÚCURA 154", "zone": "01", "employees": [{"ci": "15404979", "name": "DEINNYS SANDOVAL"}, {"ci": "15646627", "name": "DAYANA HERNANDEZ"}, {"ci": "18277860", "name": "FERNANDO LOPEZ"}, {"ci": "18596991", "name": "NELSON MONTILLA"}, {"ci": "15837616", "name": "ORLANDO MARIN"}, {"ci": "21411706", "name": "DAVIELIS VELASCO"}, {"ci": "24204480", "name": "YOHANA GUDIÑO"}, {"ci": "17143527", "name": "LUIS MUÑOZ"}, {"ci": "18276793", "name": "JESSICA LINAREZ"}, {"ci": "19504485", "name": "JENNIFER DE OLIVEIRA"}, {"ci": "5532903", "name": "ANAYR YEPEZ"}, {"ci": "28218488", "name": "MARIA CRUZ"}, {"ci": "25994969", "name": "BENJAMIN FLORES"}, {"ci": "27127938", "name": "GREGORY MELO"}, {"ci": "28218378", "name": "ROSANGEL RODRIGUEZ"}, {"ci": "30718193", "name": "ALLEINE PRIETO"}, {"ci": "26711645", "name": "KISBELL BERRIOS"}, {"ci": "30260902", "name": "ROBEYKER PACHECO"}, {"ci": "28007210", "name": "ADILENY RODRIGUEZ"}, {"ci": "27344403", "name": "HILLARY OCHOA"}, {"ci": "29797783", "name": "OLGA ZAPATA"}, {"ci": "27588510", "name": "GRECIA CUAURO"}, {"ci": "29567723", "name": "SAMUEL PINERO"}, {"ci": "28443644", "name": "KLEIVER VELASQUEZ"}, {"ci": "28323562", "name": "GENESIS SUAREZ"}, {"ci": "26516953", "name": "ANYULYS GONZALEZ"}, {"ci": "23628096", "name": "KENNY GUARACO"}, {"ci": "25329768", "name": "YERDENSON MORENO"}, {"ci": "30613072", "name": "BRIAN RODRIGUEZ"}, {"ci": "30313929", "name": "IGNACIO MONTES"}, {"ci": "27449979", "name": "SCARLETT DELGADO"}, {"ci": "29512098", "name": "JOSUE DURAN"}, {"ci": "30919960", "name": "TAHANY KALIL"}, {"ci": "26089041", "name": "MELANNIE VELASQUEZ"}]}, {"name": "NACAR 148", "zone": "01", "employees": [{"ci": "12912295", "name": "MONICA CONTINANZA"}, {"ci": "5984654", "name": "LUZ ABREU"}, {"ci": "14045306", "name": "GERMAN MORETA"}, {"ci": "18039780", "name": "NAPOLEON JUVINAO"}, {"ci": "13846510", "name": "XIOMARA DEL C ROSALES O"}, {"ci": "20799736", "name": "NORIS PARADAS"}, {"ci": "12097395", "name": "MARILYN BELISARIO"}, {"ci": "27439447", "name": "ANDERLIN MEJIAS"}, {"ci": "27797726", "name": "VICTORIA GUERRA"}, {"ci": "26915230", "name": "FRANKLIN ARTEAGA"}, {"ci": "26148184", "name": "ELIESER LOPEZ"}, {"ci": "27488023", "name": "ISAIAS APONTE"}, {"ci": "24901163", "name": "JOSE RODRIGUEZ"}, {"ci": "25252098", "name": "YASDRIN SANCHEZ"}, {"ci": "28038132", "name": "LEONARDO VALERO"}, {"ci": "26621569", "name": "NEYERLIT ROJAS"}, {"ci": "23690488", "name": "YUSNERY RAMIREZ"}, {"ci": "26741197", "name": "DAYMARY GUZMAN"}, {"ci": "27746295", "name": "MARCO MONTILLA"}, {"ci": "27660544", "name": "GABRIELA GUARAMATO"}, {"ci": "29608334", "name": "JONATHAN MORALES"}, {"ci": "29658550", "name": "DEILYN GARCIA"}, {"ci": "30467950", "name": "GERALDINE DE FEX"}, {"ci": "10220099", "name": "AGUSMEL OLIVEROS"}, {"ci": "30165901", "name": "ARIANNY SUAREZ"}, {"ci": "29780386", "name": "EMERSON CUEVAS"}, {"ci": "30769044", "name": "ANGELO CONTRERAS"}, {"ci": "27598138", "name": "EDSSON ALARCON"}, {"ci": "29662699", "name": "SAMUEL MERCADO"}, {"ci": "31839131", "name": "NIKOLE DUGARTE"}, {"ci": "30467992", "name": "JOSE SALAS"}, {"ci": "27988662", "name": "REBEKA NIÑO"}, {"ci": "32731846", "name": "CRISTIAN BURGOS"}, {"ci": "20827013", "name": "JORGE BOSQUE"}, {"ci": "29686096", "name": "LUIS APONTE"}, {"ci": "31453884", "name": "FABIOLA PEREZ"}]}, {"name": "RUBI 145", "zone": "01", "employees": [{"ci": "14594336", "name": "ANDERSON ROSAS"}, {"ci": "18369527", "name": "ALEIDA GUARAMATO"}, {"ci": "24462976", "name": "ENYALI MENDOZA"}, {"ci": "22436623", "name": "MIGUEL MORENO"}, {"ci": "20995720", "name": "MIGUEL HERRERA"}, {"ci": "22496435", "name": "JOSE PARRA"}, {"ci": "18870292", "name": "EDGAR PIRE"}, {"ci": "20603402", "name": "BETZABETH GONZALEZ"}, {"ci": "27314223", "name": "LEONAL LIZARRAGA"}, {"ci": "28534322", "name": "YANCARLIS CHOURIO"}, {"ci": "27130877", "name": "ARIANNY RUIZ"}, {"ci": "26064950", "name": "FABIANA MORA"}, {"ci": "26466176", "name": "GILBERT MARTINEZ"}, {"ci": "29804313", "name": "YAILIN PERAZA"}, {"ci": "29694233", "name": "ORLENYS ZAPATA"}, {"ci": "26966915", "name": "ANDREA FLORES"}, {"ci": "27659660", "name": "KIMBERLY PICHARDO"}, {"ci": "31269366", "name": "ADRIAN PELUFFO"}, {"ci": "28326909", "name": "MOYSES ESCORIHUELA"}, {"ci": "28516587", "name": "EVELYN VELIZ"}, {"ci": "28180994", "name": "ALEXANDRA MAIGUA"}, {"ci": "26893770", "name": "CHRISTIAN SOJO"}, {"ci": "29512434", "name": "JERALDIN HERNANDEZ"}, {"ci": "31657414", "name": "CARLOS VILLAROEL"}, {"ci": "27333815", "name": "YONAIKER GONZALEZ"}, {"ci": "32402924", "name": "GEFERSON ANDRADE"}, {"ci": "24924841", "name": "ORIANA GONZALEZ"}]}, {"name": "TEO 125", "zone": "01", "employees": [{"ci": "15164690", "name": "JENNY BASTIDAS"}, {"ci": "6912451", "name": "JHONELIA NADALES"}, {"ci": "18414523", "name": "LUISANA RODRIGUEZ"}, {"ci": "16598001", "name": "YUSMARY CAMARGO"}, {"ci": "21378861", "name": "SONIA GALVIS"}, {"ci": "18185958", "name": "ANIBAL GONZALEZ"}, {"ci": "21051430", "name": "JEYFRI ROJAS"}, {"ci": "26466588", "name": "MARIELIS LOPEZ"}, {"ci": "28052151", "name": "ANYELA CARDONA"}, {"ci": "27985772", "name": "IBRAHIM PAEZ"}, {"ci": "26823834", "name": "ANDRES FEBRES"}, {"ci": "28291146", "name": "RONNY OJEDA"}, {"ci": "28051893", "name": "MICHELLE IDILBI"}, {"ci": "26787128", "name": "KARELIN SANCHEZ"}, {"ci": "30153529", "name": "JONAS ANDRADE"}, {"ci": "19581389", "name": "JOSEIMI MARIN"}, {"ci": "27784129", "name": "OSMARYS MILLAN"}, {"ci": "30031591", "name": "EDUARDO DURAN"}, {"ci": "28149995", "name": "BRIAN PEREZ"}, {"ci": "30514384", "name": "DIANA MARIN"}, {"ci": "26794531", "name": "KARLIN SERRANO"}, {"ci": "29553434", "name": "JONATHAN FERMENAL"}, {"ci": "13822191", "name": "VANESSA BARRIOS"}, {"ci": "31838509", "name": "MARIA RIVAS"}, {"ci": "30815438", "name": "MARIANA VARGAS"}, {"ci": "27996984", "name": "DESIREE HERNANDEZ"}, {"ci": "30392374", "name": "LUIS TOTUA"}, {"ci": "30751312", "name": "RICARDO GARCIA"}, {"ci": "31872330", "name": "YUSGLEY MORALES"}, {"ci": "30224569", "name": "JIMMY RODRIGUEZ"}, {"ci": "32430646", "name": "GABRIEL MONTILLA"}, {"ci": "31087861", "name": "JULIANGERLYN ZAPATA"}, {"ci": "30954344", "name": "DANIELIS VENEGAS"}, {"ci": "20748050", "name": "BARBARA HURTADO"}]}, {"name": "TOBOGAN 113", "zone": "01", "employees": [{"ci": "11226319", "name": "LILIANA MONTILLA"}, {"ci": "25964441", "name": "ENELKIS VELIZ"}, {"ci": "23690200", "name": "JHANMARY MATHEUS"}, {"ci": "25510046", "name": "JORGE GIL"}, {"ci": "25444423", "name": "ARACELIS SAAVEDRA"}, {"ci": "25516493", "name": "ALVARO HERMOSO"}, {"ci": "28337532", "name": "RUBI PATIÑO"}, {"ci": "29537427", "name": "JEIRAM MARTINEZ"}, {"ci": "29905223", "name": "MIGUEL GONZALEZ"}, {"ci": "29617336", "name": "MARIA MARTINEZ"}, {"ci": "21689832", "name": "CARLOS COLINA"}, {"ci": "30138739", "name": "VALERY GONZALEZ"}, {"ci": "26818200", "name": "ARELYS PIÑATES"}, {"ci": "29947744", "name": "KISBEL ARIAS"}, {"ci": "27092554", "name": "SAMUEL HURTADO"}, {"ci": "30021363", "name": "DEREK MACADAN"}, {"ci": "13688579", "name": "GERALDINE GUERRERO"}, {"ci": "31444638", "name": "ANTHONY CONTRERAS"}, {"ci": "23622387", "name": "DANIELA RODRIGUEZ"}, {"ci": "28475050", "name": "SABDHIEL FARIAS"}, {"ci": "16273463", "name": "DEYANIRA NUNEZ"}, {"ci": "26104758", "name": "GISELI MEDINA"}, {"ci": "28149012", "name": "ENMANUEL ALBORNOZ"}, {"ci": "26290274", "name": "LEONARDO LANDINEZ"}, {"ci": "30143620", "name": "YORYET JERGO"}, {"ci": "27692989", "name": "MARIA BRICEÑO"}]}, {"name": "CAMINITO 190", "zone": "05", "employees": [{"ci": "14688529", "name": "RAFAEL ANSELMI"}, {"ci": "16116203", "name": "RUBEN ARMAS"}, {"ci": "17457976", "name": "FROVIER EGAÑEZ"}, {"ci": "13893608", "name": "KEYLA VELASQUEZ"}, {"ci": "18557250", "name": "ANGUIE MARTIN"}, {"ci": "23611585", "name": "AYMARA VIVAS"}, {"ci": "13457615", "name": "SHIRLEY BLANCO"}, {"ci": "28152930", "name": "CLEIDYS HERNANDEZ"}, {"ci": "26022067", "name": "YUGEIMIG COLMENAREZ"}, {"ci": "28311786", "name": "YINMI QUINTANA"}, {"ci": "26994117", "name": "ISMAIRIS DIAZ"}, {"ci": "28576704", "name": "FRANYULIS ABREU"}, {"ci": "28316662", "name": "ENRIQUE ALFONZO"}, {"ci": "29678642", "name": "KIMBERLYN LADERA"}, {"ci": "27784128", "name": "ANDRES GUZMAN"}, {"ci": "25229608", "name": "ANGELICA CASTAÑEDA"}, {"ci": "24272751", "name": "ALESHA HURTADO"}, {"ci": "30264981", "name": "ELIZELIN ABREU"}, {"ci": "25706797", "name": "BRENDA URDANETA"}, {"ci": "28547251", "name": "ORIELYS FRENANDEZ"}, {"ci": "27111500", "name": "GEIBERT ARRIETA"}, {"ci": "27623140", "name": "RAFAELY CRUZ"}, {"ci": "30113974", "name": "YEISBEL BIRRIEL"}, {"ci": "30227454", "name": "RICHARD FLORES"}, {"ci": "29611777", "name": "ANA SALAZAR"}, {"ci": "26475697", "name": "ANYELI BORGES"}, {"ci": "27391763", "name": "FREDDY ACEVEDO"}, {"ci": "30428995", "name": "MIGUEL FUENMAYOR"}, {"ci": "24319229", "name": "YENTRICK ARALVIS"}, {"ci": "25532432", "name": "FRANCISCO GARCIA"}, {"ci": "31026533", "name": "ENMANUEL ESCALANTE"}, {"ci": "31605363", "name": "CARLOS INOJOSA"}, {"ci": "31777315", "name": "MOISES GIROTT"}]}, {"name": "CORINA 116", "zone": "05", "employees": [{"ci": "13251832", "name": "DEYANIRA MARTINEZ"}, {"ci": "11515920", "name": "REBECA MARIN"}, {"ci": "21134349", "name": "ALEJANDRO RODRIGUEZ"}, {"ci": "17755296", "name": "ELIZABETH ROJAS"}, {"ci": "19242449", "name": "JOSMAIRA MEJIAS"}, {"ci": "17390186", "name": "OMAR CZARNIK"}, {"ci": "20290316", "name": "ANTHONY PEREZ"}, {"ci": "17299445", "name": "WILMAR PINTO"}, {"ci": "27814095", "name": "YINDRI POZO"}, {"ci": "29677779", "name": "VALERIA CARREÑO"}, {"ci": "26597436", "name": "DARLIN DIAZ"}, {"ci": "30693016", "name": "VALERIA MIRANDA"}, {"ci": "28484116", "name": "MARIA PEREZ"}, {"ci": "21330955", "name": "JESSICA VELASQUEZ"}, {"ci": "28484627", "name": "ELIANA SEQUERA"}, {"ci": "29621096", "name": "WILMER FERNANDEZ"}, {"ci": "31935983", "name": "DANIEL BERROTERAN"}, {"ci": "21391239", "name": "JESUS RIVERO"}, {"ci": "30395383", "name": "ARIAGNE MARTINEZ"}, {"ci": "29883143", "name": "MARIA GOLINDANO"}, {"ci": "29935824", "name": "ZEUS MAESTRE"}, {"ci": "30358009", "name": "DENINSON SERRANO"}, {"ci": "30470562", "name": "MAURICIO JAIME"}, {"ci": "32061425", "name": "JOSABAD VIELMA"}]}, {"name": "GRANATE 199", "zone": "05", "employees": [{"ci": "12951077", "name": "EDIMAR AVENDAÑO"}, {"ci": "10902965", "name": "YALI PEREIRA"}, {"ci": "20596999", "name": "KEYVER LOPEZ"}, {"ci": "17508823", "name": "MARGOT ESTANGA"}, {"ci": "20032443", "name": "HELEN CORREA"}, {"ci": "7999399", "name": "BIAGIO AVIGLIANO"}, {"ci": "19634448", "name": "YOHANNA MALAVE"}, {"ci": "21367255", "name": "EVIS MONTILLA"}, {"ci": "21104322", "name": "ANGEL RIVAS"}, {"ci": "16007098", "name": "MARIA PIMENTEL"}, {"ci": "24272385", "name": "OSCAR ROJAS"}, {"ci": "22381558", "name": "DAILYS CABEZAS"}, {"ci": "20820643", "name": "WILMAN CAMPOS"}, {"ci": "25735985", "name": "DOUGLAS ANDARCIA"}, {"ci": "29537439", "name": "JOSE GONZALEZ"}, {"ci": "29635496", "name": "WINSTON CAMPOS"}, {"ci": "18555794", "name": "LUIS ALVAREZ"}, {"ci": "19367525", "name": "JOSE MURIA"}, {"ci": "21103528", "name": "ANA GUERRERO"}, {"ci": "25915343", "name": "DANIELIS SOJO"}, {"ci": "30045458", "name": "MIRANDA AZUAJE"}, {"ci": "30045045", "name": "ARIANNI REINOSO"}, {"ci": "27623559", "name": "ENRIQUE PLATON"}, {"ci": "22561819", "name": "ESFTEFANY MOLINA"}, {"ci": "30677884", "name": "LISLE MONAGAS"}, {"ci": "28318424", "name": "MILAGRO ARAMBULO"}, {"ci": "30222297", "name": "KATHERYN CRUZ"}, {"ci": "31237926", "name": "PATRICIA GONZALEZ"}, {"ci": "26409788", "name": "YORGLEIDIS CATAMO"}, {"ci": "31071598", "name": "KARLEN ARRIECHE"}, {"ci": "29551173", "name": "DAMJELL BOLIVAR"}, {"ci": "32281611", "name": "HUMBERTO RENGIFO"}, {"ci": "28312144", "name": "ARAUSI SILVA"}, {"ci": "21105749", "name": "MAIRIM ECHEZURIA"}]}, {"name": "JENNIFER", "zone": "05", "employees": [{"ci": "17459214", "name": "YANHALYN DUARTE"}, {"ci": "19788650", "name": "NAIROBYS BLANCO"}, {"ci": "17772335", "name": "SUSANA BELTRAN"}, {"ci": "24280407", "name": "MICHAEL TORRES"}, {"ci": "24280652", "name": "GENESIS CURVELO"}, {"ci": "25878117", "name": "OMARIANNY MUÑOZ"}, {"ci": "27111404", "name": "ANA MORGANTI"}, {"ci": "25000347", "name": "YELIANNY VELIZ"}, {"ci": "9089933", "name": "WILLIANS BLANCO"}, {"ci": "30305906", "name": "DANIANGEL LANDAETA"}, {"ci": "30151476", "name": "YURIMAR GARMENDIA"}, {"ci": "30727971", "name": "FRANCIEL BARRIOS"}, {"ci": "27454809", "name": "KELLY GARCIA"}, {"ci": "29829667", "name": "YORGELYS PAIVA"}, {"ci": "30449565", "name": "ANGELIS BORRERO"}, {"ci": "30775146", "name": "CHRISTIAN QUIARO"}, {"ci": "27454312", "name": "ANGELA GONZALEZ"}, {"ci": "25223951", "name": "YENNIFER FERREIRA"}, {"ci": "29508863", "name": "ANDRIU GIL"}, {"ci": "26740852", "name": "JANETTE PRADO"}, {"ci": "30222130", "name": "PAOLA LAYA"}, {"ci": "27807479", "name": "FRANK LANDAEZ"}, {"ci": "34403375", "name": "VICDEIKER RIVAS"}, {"ci": "30728501", "name": "XAVIER CARABALLO"}, {"ci": "13088512", "name": "ROSANA BECERRA"}]}, {"name": "JUAN BAUTISTA", "zone": "05", "employees": [{"ci": "15665145", "name": "RAFAEL GARCIA"}, {"ci": "20050211", "name": "BARBARA YAYA"}, {"ci": "18277009", "name": "MARIA SUBERO"}, {"ci": "14528849", "name": "ANA SANDOVAL"}, {"ci": "22796112", "name": "LLILVELID VASQUEZ"}, {"ci": "22964894", "name": "YOANDRY GARCIA"}, {"ci": "25847376", "name": "NORKIS BEJARANO"}, {"ci": "25847358", "name": "ROSSELYN CHACON"}, {"ci": "26012736", "name": "DEYMAR ABRIL"}, {"ci": "20613650", "name": "ISABEL BUITRAGO"}, {"ci": "22354146", "name": "DANGILEHT CHANCHAMIRE"}, {"ci": "19596174", "name": "IRMARY ROSALES"}, {"ci": "20221055", "name": "JUAN MANTILLA"}, {"ci": "25787428", "name": "SAREZHADDE GIL"}, {"ci": "26334842", "name": "MICHELL CANTILLO"}, {"ci": "27916483", "name": "YALEIDYS GUTIERREZ"}, {"ci": "30693282", "name": "KATHERINE SALAZAR"}, {"ci": "25225690", "name": "MARIELA TOLEDO"}, {"ci": "4325499", "name": "SUSANA DEL C. VILORIA P."}, {"ci": "22042970", "name": "MARIA PIÑANGO"}, {"ci": "28325337", "name": "RAMCES RAMOS"}, {"ci": "25674220", "name": "ROBERT PEÑA"}, {"ci": "30660342", "name": "GABRIEL REPUESA"}, {"ci": "31187089", "name": "YONAIKER HERNANDEZ"}, {"ci": "30519881", "name": "OMAR SUAREZ"}, {"ci": "28318008", "name": "ADRIAN ALVAREZ"}, {"ci": "31623710", "name": "JOHAN MEJIA"}, {"ci": "31065363", "name": "GERARDO SALVATIERRA"}]}, {"name": "LA JOYA 152", "zone": "05", "employees": [{"ci": "22015287", "name": "ROBERTO MEDINA"}, {"ci": "16430980", "name": "BRANY NEGRIN"}, {"ci": "25740780", "name": "FRAYELYN MARTINEZ"}, {"ci": "29990181", "name": "GENESIS DE PAIXAO"}, {"ci": "9880124", "name": "LOURDES SOTO"}, {"ci": "29677227", "name": "HORANGEL RAMIREZ"}, {"ci": "28218511", "name": "ALEJANDRA LEON"}, {"ci": "28310312", "name": "ARGENIS GRATEROL"}, {"ci": "29537985", "name": "REIMEL ESPARRAGOZA"}, {"ci": "27978955", "name": "DAVID CARDOZO"}, {"ci": "30682983", "name": "VALENTINA TABORDA"}, {"ci": "21281295", "name": "AIBERT ROJAS"}, {"ci": "26993637", "name": "KEVIN BURGOS"}, {"ci": "25236772", "name": "MARIA ROMERO"}, {"ci": "31507556", "name": "FABBRIZIO PEREZ"}, {"ci": "23718913", "name": "DIEGO VILLAMIZAR"}, {"ci": "32538400", "name": "ORIANY CONTRERAS"}, {"ci": "26944332", "name": "VERONICA LORETO"}, {"ci": "32142258", "name": "SAMUEL COLINA"}, {"ci": "30481713", "name": "MARIAN BERMUDEZ"}, {"ci": "27353511", "name": "YOEL DOS RAMOS"}]}, {"name": "LIDER", "zone": "05", "employees": [{"ci": "16005125", "name": "DELIA ATENCIO"}, {"ci": "15373524", "name": "YOHELISA SEPULVEDA"}, {"ci": "20219425", "name": "MARIA BRICEÑO"}, {"ci": "17348666", "name": "LUIS ORTEGA"}, {"ci": "19562788", "name": "KIMBERLYN PEÑA"}, {"ci": "27401102", "name": "ROMAN RODRIGUEZ"}, {"ci": "25225909", "name": "GRECIA MATERAN"}, {"ci": "28424119", "name": "NORKELYS FLORES"}, {"ci": "27376320", "name": "PAOLA GEORGE"}, {"ci": "27321904", "name": "ALEXANDRA PALACIOS"}, {"ci": "29887298", "name": "YUSEIBI URBINA"}, {"ci": "27625359", "name": "CELMIRA ROJAS"}, {"ci": "25222547", "name": "MARIA ROSALES"}, {"ci": "26484900", "name": "VIVIANA MERIDA"}, {"ci": "26610220", "name": "DEI CARRILLO"}, {"ci": "29583108", "name": "PAOLA SEPULVEDA"}, {"ci": "21415063", "name": "ADRIANA CASTAÑEDA"}, {"ci": "29536787", "name": "KARLA SALAZAR"}, {"ci": "27531872", "name": "NORGABRIS AROCHA"}, {"ci": "29552385", "name": "MARIANNY MARCANO"}, {"ci": "29959960", "name": "JUAN RANGEL"}, {"ci": "31080168", "name": "KELVIN MENDOZA"}]}, {"name": "MIRENA 115", "zone": "05", "employees": [{"ci": "11930084", "name": "ELISA ZABALA"}, {"ci": "18512507", "name": "CINTHYA VICEN"}, {"ci": "14164077", "name": "LUIS GAZCON"}, {"ci": "12054046", "name": "JAQUELINE COLMENARES"}, {"ci": "17268191", "name": "JULIO RENGIFO"}, {"ci": "12054948", "name": "YOLEIDA APARCEDO"}, {"ci": "20841450", "name": "KENDRI GOMEZ"}, {"ci": "14397960", "name": "YAMELYS LUGO"}, {"ci": "20801068", "name": "ROSMARY RAMOS"}, {"ci": "14559248", "name": "YULEISKA NEGRIN"}, {"ci": "19288874", "name": "NOHELIS DIAZ"}, {"ci": "3665289", "name": "MARIA I. ORTIZ A."}, {"ci": "18967031", "name": "RAUL DE SOUSA"}, {"ci": "17120219", "name": "NOHELIA ESPINOZA"}, {"ci": "21414036", "name": "GLEDYS TORRES"}, {"ci": "21131877", "name": "ELBA ARCIA"}, {"ci": "27449630", "name": "ARIANNY BARRIOS"}, {"ci": "26476055", "name": "FRANCYS VINAJA"}, {"ci": "16178511", "name": "YOSMARY B. GARCIA R."}, {"ci": "23596890", "name": "YOLIBETH PEÑA"}, {"ci": "28333154", "name": "SCARLET CORDERO"}, {"ci": "26946360", "name": "JOLFFRE SUBERO"}, {"ci": "27545568", "name": "GREIMAR GARCIA"}, {"ci": "30062499", "name": "MICHAEL PEÑALOZA"}, {"ci": "31623499", "name": "NAYERLIN FIGUERA"}, {"ci": "30062389", "name": "LEUMAN TERAN"}, {"ci": "28152173", "name": "MARIA JUSTO"}, {"ci": "25369521", "name": "JHORLEY RODRIGUEZ"}, {"ci": "28338873", "name": "TOMAS EREU"}, {"ci": "30165247", "name": "MICHAEL SIERRA"}, {"ci": "20096003", "name": "RAUDETT VILLAMIZAR"}, {"ci": "30205639", "name": "CESAR LEAL"}]}, {"name": "MONTANAL 150", "zone": "05", "employees": [{"ci": "16247513", "name": "BEATRIZ AGUILAR"}, {"ci": "15872754", "name": "BLEIDIS SOLENO"}, {"ci": "22965224", "name": "ANA CUMANA"}, {"ci": "21414049", "name": "ROSANGELICA CARDONA"}, {"ci": "22424343", "name": "JOSELIN CARREÑO"}, {"ci": "19532605", "name": "PERLA CARRION"}, {"ci": "20799714", "name": "NAYARITH PARADA"}, {"ci": "19202477", "name": "DANNY YANCEL"}, {"ci": "23707161", "name": "ADALYS CASTELLON"}, {"ci": "19379826", "name": "ANA LINARES"}, {"ci": "19561499", "name": "DENIS MEJIAS"}, {"ci": "25038351", "name": "DANIEL CENTENO"}, {"ci": "17233137", "name": "JHON TORRES"}, {"ci": "19379757", "name": "ANA MONSALVE"}, {"ci": "22354554", "name": "MARIA FLORES"}, {"ci": "30358054", "name": "JOHANDRI BARAZARTE"}, {"ci": "27050361", "name": "ANDREIXIS SOTILLO"}, {"ci": "29973518", "name": "STEFANI SUAREZ"}, {"ci": "25964695", "name": "RONALD GARCIA"}, {"ci": "29553709", "name": "CRISTIAN GOMEZ"}, {"ci": "29887515", "name": "GENESIS RODRIGUEZ"}, {"ci": "30888685", "name": "JARYELIS PERDOMO"}, {"ci": "14385062", "name": "MARIA DEL C. CASTELLON"}, {"ci": "26254545", "name": "KARLYS SANABRIA"}, {"ci": "31979018", "name": "ISSIS GUEVARA"}, {"ci": "28218574", "name": "STEPHANY VAZQUEZ"}, {"ci": "32510506", "name": "DANIEL GARCIA"}, {"ci": "26966475", "name": "GABRIELA MOGOLLON"}]}, {"name": "NELLYS 187", "zone": "05", "employees": [{"ci": "24887771", "name": "MARIA FIGUEROA"}, {"ci": "22032416", "name": "ANDREA GUERRERO"}, {"ci": "21105125", "name": "MARYELYS MARTINEZ"}, {"ci": "16910088", "name": "CARLOS GALARRAGA"}, {"ci": "20033053", "name": "ANDRY ROJAS"}, {"ci": "18403607", "name": "LIOREIDY NAVARRO"}, {"ci": "25253599", "name": "YURIMAR CEBALLOS"}, {"ci": "27039013", "name": "NIGER ZAMORA"}, {"ci": "20033298", "name": "ROLANDO NAVAS"}, {"ci": "6432872", "name": "CARMEN QUIÑONEZ"}, {"ci": "27545073", "name": "GREGORY MUÑOZ"}, {"ci": "20208599", "name": "HENRY ECHEZURIA"}, {"ci": "26740364", "name": "CENELIS HERNANDEZ"}, {"ci": "25990399", "name": "GERALDINE SALAZAR"}, {"ci": "26528196", "name": "ORIANA GONZALEZ"}, {"ci": "26475764", "name": "ORIANA REGALADO"}, {"ci": "26682324", "name": "JOSE TOMASE"}, {"ci": "28302153", "name": "ALEJANDRA PINEDA"}, {"ci": "29935744", "name": "ANDRES BASTIDAS"}, {"ci": "11689933", "name": "ROISE ROSALES"}, {"ci": "30084829", "name": "JEAN AGUIRRE"}, {"ci": "17651702", "name": "CELENIA RENGIFO"}, {"ci": "30285719", "name": "YENIFER CARRASCO"}, {"ci": "6166959", "name": "PETRA L. HERNANDEZ R."}, {"ci": "27053128", "name": "DANIELA CASTILLO"}, {"ci": "28152426", "name": "HECTOR GOMEZ"}, {"ci": "24271458", "name": "LISOLETH MENDEZ"}, {"ci": "28325000", "name": "LINO GUEVARA"}, {"ci": "31923387", "name": "BRAYAN MORALES"}, {"ci": "31160514", "name": "RONNALD VARGAS"}, {"ci": "30129323", "name": "GUILLERMO GUTIERREZ"}]}, {"name": "OCUMITO 196", "zone": "05", "employees": [{"ci": "14036044", "name": "CARMEN MARTINEZ"}, {"ci": "17077797", "name": "KEIBERTH COLMENARES"}, {"ci": "2518620", "name": "INES PADRON"}, {"ci": "24222067", "name": "JESUS ARREAZA"}, {"ci": "13290057", "name": "JOAQUIN ALAYON"}, {"ci": "19266819", "name": "MIGUEL PEREZ"}, {"ci": "20653282", "name": "ZULENNY PALACIOS"}, {"ci": "26610892", "name": "JUNIOR SALAS"}, {"ci": "24673911", "name": "ANTHONI BORRERO"}, {"ci": "18937745", "name": "SANDIBEL ORTEGA"}, {"ci": "30318239", "name": "KAREN ABELLO"}, {"ci": "28120563", "name": "ESTEFANY FLORES"}, {"ci": "26946730", "name": "YORBELIS GARCIA"}, {"ci": "28180308", "name": "GREILIS DAVID"}, {"ci": "26089049", "name": "FREIMILI BRITO"}, {"ci": "25672626", "name": "HILDA HERNANDEZ"}, {"ci": "30176123", "name": "GRISELLE BRAVO"}, {"ci": "27007444", "name": "CAROLAIN GOMEZ"}, {"ci": "27332898", "name": "ESTEFANY GONZALEZ"}, {"ci": "28318067", "name": "SAMUEL COBIAN"}, {"ci": "29883259", "name": "ANGEIDI PUENTES"}, {"ci": "29784406", "name": "JEAN VIELMA"}, {"ci": "28502194", "name": "KATERIN QUINTERO"}, {"ci": "30888362", "name": "KAREN ABREU"}, {"ci": "14330330", "name": "MARIA DIAZ"}, {"ci": "30946871", "name": "KEINER TORRES"}, {"ci": "25959681", "name": "DANIELA GENOVA"}, {"ci": "28211353", "name": "CARLOS SERVANDO"}, {"ci": "5880728", "name": "CARMEN PLAZA R."}]}, {"name": "SAN PASTOR 192", "zone": "05", "employees": [{"ci": "13419984", "name": "YENNY GONZALEZ"}, {"ci": "15710445", "name": "ELLUZ PEREZ"}, {"ci": "20492102", "name": "ALEXANDRA MEZA"}, {"ci": "23610043", "name": "SOLEDAD HERNANDEZ"}, {"ci": "23189271", "name": "INGRID ANGULO"}, {"ci": "24618966", "name": "KEILIN DURAN"}, {"ci": "17400125", "name": "YESSICA BARAZARTE"}, {"ci": "21414912", "name": "RAQUEL ULLOA"}, {"ci": "21415985", "name": "REINALDO LOPEZ"}, {"ci": "19293380", "name": "LUISA RANGEL"}, {"ci": "24698198", "name": "ELIDE URREA"}, {"ci": "20816000", "name": "NEREIDY VILLEGAS"}, {"ci": "20802108", "name": "DIANA CARDENAS"}, {"ci": "26966030", "name": "LUIS LOZADA"}, {"ci": "26911858", "name": "LISMAR MARTINEZ"}, {"ci": "26726140", "name": "WINIFER MENDEZ"}, {"ci": "24057986", "name": "JOSHUA ROMERO"}, {"ci": "21130697", "name": "ROBINSON ANGULO"}, {"ci": "27622220", "name": "YULIANA HIDALGO"}, {"ci": "16705050", "name": "YORIANI TORRES"}, {"ci": "29829507", "name": "ELIZABETH MARTINEZ"}, {"ci": "27545615", "name": "STEPHANI NUÑEZ"}, {"ci": "28219552", "name": "RANDY URDANETA"}, {"ci": "21133590", "name": "ASDRUBAL MANZANILLA"}, {"ci": "30693431", "name": "YONAILY JIMENEZ"}, {"ci": "30358287", "name": "NADIUSKA LOZANO"}, {"ci": "31453790", "name": "FABIAN SANCHEZ"}, {"ci": "30371087", "name": "JEREMY ESPINOSA"}, {"ci": "25867781", "name": "URIEL RODRIGUEZ"}, {"ci": "29955236", "name": "LEONEL MATA"}, {"ci": "27516389", "name": "KEISY GUEVARA"}, {"ci": "31872821", "name": "ALISMAR MARRERO"}, {"ci": "32538804", "name": "JOSE CEDENO"}, {"ci": "30841716", "name": "REINALDO GUERRA"}, {"ci": "14277591", "name": "JUAN ARAQUE"}, {"ci": "13125369", "name": "NENINA VALBUENA"}]}, {"name": "SETENTA 111", "zone": "05", "employees": [{"ci": "14992542", "name": "MARIA GRATEROL"}, {"ci": "18003687", "name": "MARIA GONZALEZ"}, {"ci": "17443627", "name": "YOMAIRA FLORES"}, {"ci": "19085912", "name": "KARLY MONTILLA"}, {"ci": "20677060", "name": "BERTHA MORENO"}, {"ci": "24331524", "name": "JOEL BOLIVAR"}, {"ci": "20802603", "name": "NAHOMI MENDOZA"}, {"ci": "21345186", "name": "KEISIS TORRES"}, {"ci": "27246491", "name": "JHONNY MOLINA"}, {"ci": "29883040", "name": "JAMENSON RIVERA"}, {"ci": "29780566", "name": "GABRIELLIS MARTINEZ"}, {"ci": "18578782", "name": "NOIRA RANGEL"}, {"ci": "22496492", "name": "DARLENIS CAÑA"}, {"ci": "27776349", "name": "MARIAM VALLADARES"}, {"ci": "12958536", "name": "MARICEL C. CASTRO A."}]}, {"name": "TURQUESA 198", "zone": "05", "employees": [{"ci": "17802478", "name": "LORIANA HERNANDEZ"}, {"ci": "10699639", "name": "ORELIZA AGUILAR"}, {"ci": "18521875", "name": "WILNIURKA GRAFFE"}, {"ci": "14225537", "name": "EDELMIRA GARCIAS"}, {"ci": "15699044", "name": "MARLENE GOMES"}, {"ci": "15373456", "name": "MARIA DE LOS VELIZ"}, {"ci": "18003971", "name": "YOMAIRA SOSA"}, {"ci": "25990337", "name": "FRANK ROMERO"}, {"ci": "17650546", "name": "YRANGER TERAN"}, {"ci": "23654995", "name": "DARVIN GARCIA"}, {"ci": "25915174", "name": "KELLY BATATIMA"}, {"ci": "25542213", "name": "JOSBEL BOGADO"}, {"ci": "27235163", "name": "SAUL VILLANUEVA"}, {"ci": "26058130", "name": "LUIS PELAYO"}, {"ci": "28143558", "name": "JOHER LUCENA"}, {"ci": "27235690", "name": "ARIANNY PARRA"}, {"ci": "27401374", "name": "RICHARD ARVELO"}, {"ci": "26250981", "name": "ORIANA MAITA"}, {"ci": "20593507", "name": "JOHANSEN HERNANDEZ"}, {"ci": "28006019", "name": "JESSICA AGUIRRE"}, {"ci": "29678788", "name": "GABRIELA SALAZAR"}, {"ci": "28416699", "name": "ADIMAR LEDEZMA"}, {"ci": "27623274", "name": "MIGUEL SANTANA"}, {"ci": "21103570", "name": "GENESIS BRITO"}, {"ci": "30349987", "name": "ESTEBAN QUIJADA"}, {"ci": "32899969", "name": "CARLOS VELASQUEZ"}, {"ci": "30285617", "name": "ELIANYELI ULLOA"}]}, {"name": "VERTIENTE 197", "zone": "05", "employees": [{"ci": "14495290", "name": "YOLIBER YAJURI"}, {"ci": "12846713", "name": "FRANCISCO CHACON"}, {"ci": "18813641", "name": "FELIX RONDON"}, {"ci": "16974379", "name": "YOSMARY CASTILLO"}, {"ci": "20820445", "name": "YOHANTONI PALACIOS"}, {"ci": "21102437", "name": "STEPHANIE MAITA"}, {"ci": "20594682", "name": "ANA SEVILLA"}, {"ci": "21103988", "name": "GREICY ROJAS"}, {"ci": "24335138", "name": "NICOLAS MOROCOIMA"}, {"ci": "20563585", "name": "ANYOLY ESPINOZA"}, {"ci": "26672659", "name": "ESTEFANI SALGADO"}, {"ci": "27302449", "name": "DANIELYS LUQUE"}, {"ci": "23068118", "name": "JENIFER HERRERA"}, {"ci": "29584099", "name": "KEILYS PAIVA"}, {"ci": "30264614", "name": "JONAYMELI MORALES"}, {"ci": "30579627", "name": "LUIS MONTES DE OCA"}, {"ci": "21103925", "name": "STEFANY FRIAS"}, {"ci": "27488615", "name": "ARLETTE HERRERA"}, {"ci": "29537873", "name": "OMAR GARCIA"}, {"ci": "18955059", "name": "YONNY RAMIREZ"}, {"ci": "25369894", "name": "ADRIANA MORA"}, {"ci": "28576666", "name": "YATZURY CHACON"}, {"ci": "21115490", "name": "ERIK SERPA"}]}, {"name": "ACONCAGUA 128", "zone": "15", "employees": [{"ci": "12258071", "name": "MARIA VASQUEZ"}, {"ci": "26254199", "name": "CARLOS RIVAS"}, {"ci": "28563069", "name": "FRANYELIS ESCALANTE"}, {"ci": "25418898", "name": "ANA GARCIA"}, {"ci": "30114688", "name": "SOLANGEL BERDUGO"}, {"ci": "24656096", "name": "DANIELA PEREZ"}, {"ci": "28442293", "name": "GABRIELA DELVALLE"}, {"ci": "28142807", "name": "ANDREA MARTIN"}, {"ci": "25386657", "name": "MOIDERLYN MATA"}, {"ci": "25736002", "name": "DIEGO ESPINOZA"}, {"ci": "29536912", "name": "ANDRUW MENDOZA"}, {"ci": "29551347", "name": "JESUS CAMACHO"}, {"ci": "31426516", "name": "YEISON TORRES"}, {"ci": "19378347", "name": "ANGELICA ACOSTA"}, {"ci": "31229827", "name": "ANGELICA SARABIA"}, {"ci": "31743352", "name": "DYLAN RAMIREZ"}]}, {"name": "ALTOZANO 170", "zone": "15", "employees": [{"ci": "17781880", "name": "ALCIRA GONZALEZ"}, {"ci": "18252166", "name": "EDITH ALVARADO"}, {"ci": "20802915", "name": "CRISMAR BARRIOS"}, {"ci": "20975963", "name": "GRECIA LANDAETA"}, {"ci": "19724670", "name": "NEILIN MORIN"}, {"ci": "17751864", "name": "NEUCARI LI"}, {"ci": "20748522", "name": "YERALDINE PEREZ"}, {"ci": "24698266", "name": "VANESA IBARRA"}, {"ci": "9063448", "name": "DAYSI DE GOUVEIA"}, {"ci": "20975995", "name": "KENIA SANTAMARIA"}, {"ci": "25515814", "name": "JAVIER LEON"}, {"ci": "28307144", "name": "RONNY GODOY"}, {"ci": "27600017", "name": "ERICSON RANGEL"}, {"ci": "25517215", "name": "KAREN CARRIZO"}, {"ci": "27222614", "name": "LEIDERMAN MERO"}, {"ci": "28306710", "name": "JACKROSMARY BERMUDEZ"}, {"ci": "26921344", "name": "DANIELA ARIAS"}, {"ci": "30328313", "name": "KELVIS LIZARRAGA"}, {"ci": "26624639", "name": "KAREN MARTINEZ"}, {"ci": "27597999", "name": "JORGE FERNANDES"}, {"ci": "25386678", "name": "HECTOR ESTRADA"}, {"ci": "30051253", "name": "YULIANY TERAN"}, {"ci": "25764743", "name": "PATRIZIA PINZON"}, {"ci": "26498204", "name": "ANDREA ROA"}, {"ci": "24461639", "name": "GIOVANNA DI REMIGIO"}, {"ci": "28148125", "name": "MARIA DE DA CAMARA"}, {"ci": "24524387", "name": "ANDREA GONCALVES"}, {"ci": "27694096", "name": "BRYANT MONSALVE"}, {"ci": "30328657", "name": "JEITHDERSEN TOVAR"}, {"ci": "27618209", "name": "LAURA HERNANDEZ"}, {"ci": "30328232", "name": "MIGUEL PEREZ"}, {"ci": "28329652", "name": "BRAYAN BONILLA"}, {"ci": "30136034", "name": "DIEGO GUZMAN"}, {"ci": "28444459", "name": "GABRIEL CUEVAS"}, {"ci": "30051418", "name": "DIEGO LARA"}, {"ci": "29622284", "name": "LEONARDO BRICEÑO"}, {"ci": "28329902", "name": "ROGER NIEVES"}, {"ci": "30457099", "name": "JOSE VARGAS"}, {"ci": "27222265", "name": "MARIA RAMIREZ"}, {"ci": "30936609", "name": "BARBARA FERNANDEZ"}, {"ci": "13337996", "name": "ROBINSON VILLA"}, {"ci": "22440759", "name": "BARBARA BIELLA"}, {"ci": "27908331", "name": "MAFER SANTAELLA"}, {"ci": "5887794", "name": "MALVIS FORNICA"}]}, {"name": "DANILA", "zone": "15", "employees": [{"ci": "11407298", "name": "OLMA FERNANDEZ"}, {"ci": "6193414", "name": "OLGA ZAMBRANO"}, {"ci": "15910700", "name": "GISELA GIL"}, {"ci": "4682788", "name": "DALILA RONDON"}, {"ci": "13109974", "name": "CESAR BARBOZA"}, {"ci": "21343457", "name": "GENESIS BRICEÑO"}, {"ci": "19066806", "name": "MARIA ARELLANO"}, {"ci": "18751583", "name": "ONDINA DE ANDRADE"}, {"ci": "10542958", "name": "ADRIANA HERNANDEZ"}, {"ci": "28100596", "name": "MARCO MEDINA"}, {"ci": "18601333", "name": "YEREMI GARCIA"}, {"ci": "25845893", "name": "MARIA DELGADO"}, {"ci": "25252570", "name": "YESIMAR GONZALEZ"}, {"ci": "30510758", "name": "ENYELBERTH TORRES"}, {"ci": "30975790", "name": "LEONARDO CABRITA"}, {"ci": "27599343", "name": "FREDUAR BELLO"}, {"ci": "30181225", "name": "MIGUEL CALZADILLA"}, {"ci": "30507422", "name": "GABRIEL ROJAS"}, {"ci": "28472658", "name": "GIAN GALLARDO"}, {"ci": "28308522", "name": "ANA PAEZ"}, {"ci": "30507730", "name": "DIEGO CASTILLO"}, {"ci": "31510895", "name": "SAIRET GARCIA"}, {"ci": "31170597", "name": "SILVINO NARANJO"}, {"ci": "27941756", "name": "ALEXANDER FLORES"}, {"ci": "28081404", "name": "RAFAEL YLARRAZA"}, {"ci": "27879153", "name": "REBECA PARICA"}, {"ci": "25626094", "name": "JAQUEISY QUINTERO"}, {"ci": "26905028", "name": "JOSE COLMENARES"}, {"ci": "31633010", "name": "JEREMIAS SERRA"}]}, {"name": "GRISELDA 195", "zone": "15", "employees": [{"ci": "15343682", "name": "ALVARO OSPINO"}, {"ci": "14165772", "name": "NELSON SERRANO"}, {"ci": "18936160", "name": "NELLY NUÑEZ"}, {"ci": "22916403", "name": "DADIXABEL ALCALA"}, {"ci": "26967914", "name": "DOUGLEISY COA"}, {"ci": "20755370", "name": "JEFFERSON QUINTANA"}, {"ci": "23965827", "name": "ALONDRA CAMACHO"}, {"ci": "19398929", "name": "YANINA SUAREZ"}, {"ci": "31062467", "name": "ELIALVYS RIVAS"}, {"ci": "27671503", "name": "GREIBER RIVERO"}, {"ci": "29631102", "name": "ALANIS GARCIA"}, {"ci": "29814419", "name": "MICHELLE VILLEGAS"}, {"ci": "29631522", "name": "EUSKER MONTESDEOCA"}, {"ci": "21374006", "name": "PAOLA RODRIGUEZ"}, {"ci": "28481703", "name": "REICHERD VILLEGAS"}, {"ci": "16380067", "name": "CLARA PONTON"}, {"ci": "22339152", "name": "ANGEL VALENCIA"}, {"ci": "27294607", "name": "EMILY HOLDER"}, {"ci": "26824026", "name": "EDERWIN ACOSTA"}, {"ci": "30761104", "name": "MARIAMI OLDENBURG"}, {"ci": "29976344", "name": "LEVIS LOPEZ"}, {"ci": "29603453", "name": "ALEJANDRA MEZA"}, {"ci": "30613069", "name": "JUAN CEDENO"}, {"ci": "30370935", "name": "JELIEL CARDENAS"}, {"ci": "32088596", "name": "DILAN MARTINEZ"}, {"ci": "17077004", "name": "GRETA JARAMILLO"}, {"ci": "29947527", "name": "YORGELYS GOMEZ"}, {"ci": "11353954", "name": "MARILU BERMUDEZ"}]}, {"name": "LOS JARDINES DEL VALLE", "zone": "15", "employees": [{"ci": "10869169", "name": "LISBETH PEREIRA"}, {"ci": "10955643", "name": "LUIS VALERA"}, {"ci": "17855202", "name": "DAYANA CANO"}, {"ci": "18445258", "name": "MARIAN CASTILLO"}, {"ci": "18730546", "name": "LEGSY PALMA"}, {"ci": "19932500", "name": "MOISES NAVAS"}, {"ci": "18889155", "name": "ELIMAR PEREZ"}, {"ci": "26040762", "name": "YARITZA LEON"}, {"ci": "18031284", "name": "ALBERTO RAMOS"}, {"ci": "19013721", "name": "ANTHONY MUÑOZ"}, {"ci": "27318649", "name": "DIEGO ARIAS"}, {"ci": "24219722", "name": "DREISER BANDERA"}, {"ci": "26122651", "name": "DIEGO HERNANDEZ"}, {"ci": "29651193", "name": "DANIELA VERA"}, {"ci": "28311072", "name": "JORGE VILLALTA"}, {"ci": "29611903", "name": "VERONICA RIVERO"}, {"ci": "27915848", "name": "MAILYN RIVERO"}, {"ci": "29512088", "name": "EUMARYS LOVERA"}, {"ci": "26794479", "name": "JEIMARI LOPEZ"}, {"ci": "28327040", "name": "ANGEL ZERPA"}, {"ci": "26645301", "name": "LEYNER COLINA"}, {"ci": "24899381", "name": "GREGORIO PLAZOLA"}, {"ci": "19672623", "name": "KENNE CONA"}, {"ci": "27795828", "name": "CARLA PEREZ"}, {"ci": "30507937", "name": "JONATHAN MIJARES"}, {"ci": "30346243", "name": "LEANDRO BEJARANO"}, {"ci": "28481234", "name": "KLAUDIA VASQUEZ"}, {"ci": "31632761", "name": "ORIANA RIVAS"}, {"ci": "27599344", "name": "NATHALIE GONZALEZ"}, {"ci": "31109629", "name": "ANDRES LUNA"}, {"ci": "30769960", "name": "JHON FERNANDEZ"}, {"ci": "29514886", "name": "YOXIRIS PEÑA"}, {"ci": "29738271", "name": "DEIVER SALAZAR"}, {"ci": "24456580", "name": "JOSE GUTIERREZ"}, {"ci": "30507436", "name": "DAIVER RIVERO"}, {"ci": "30370817", "name": "GUSTAVO HERRERA"}, {"ci": "29637073", "name": "JESUS BLANCO"}, {"ci": "28461492", "name": "JEREMY ROMERO"}, {"ci": "20716034", "name": "GERARDO PARRA"}]}, {"name": "MARFIL 147", "zone": "15", "employees": [{"ci": "14533355", "name": "LISMARY SOLER"}, {"ci": "10279743", "name": "MARIA RIMER"}, {"ci": "15689746", "name": "LEIDY FIGUEROA"}, {"ci": "4345837", "name": "LUZ OCHOA"}, {"ci": "18128829", "name": "YORAXY DIAZ"}, {"ci": "25840838", "name": "EZIA ROMITELLI"}, {"ci": "19465952", "name": "DANNUY HERRERA"}, {"ci": "21257107", "name": "LAUMAR MARIÑO"}, {"ci": "24899380", "name": "GABRIEL PLAZOLA"}, {"ci": "28481502", "name": "KELVIN CHACOA"}, {"ci": "29804669", "name": "LENIS QUINTERO"}, {"ci": "28180354", "name": "JOSUE MONASTERIO"}, {"ci": "27598395", "name": "JAVIER CANALES"}, {"ci": "26113274", "name": "EVELIN FERREIRA"}, {"ci": "20606990", "name": "JOSFRED DIAZ"}, {"ci": "29992128", "name": "GABRIELA PEREZ"}, {"ci": "26952367", "name": "YEIKER PARRA"}, {"ci": "25466137", "name": "ORYANDRI GARCIA"}, {"ci": "19380569", "name": "RONALD MORENO"}, {"ci": "17641257", "name": "SUSJEI REBOLLEDO"}, {"ci": "30326920", "name": "JOSE PALMA"}, {"ci": "28180294", "name": "MADERLIN BRICEÑO"}, {"ci": "28526027", "name": "YURALIS RAMIREZ"}, {"ci": "29923083", "name": "GABRIEL SIMOZA"}, {"ci": "13822081", "name": "CARLOS FUENMAYOR"}, {"ci": "30180977", "name": "MARIA ROJAS"}, {"ci": "30906397", "name": "DIANA RAUSSEO"}, {"ci": "31324049", "name": "LAURA ACOSTA"}, {"ci": "31083138", "name": "ALFREDO APONTE"}, {"ci": "29537648", "name": "EDGARDO MOLINA"}, {"ci": "20745898", "name": "ANTHONY MEDINA"}]}, {"name": "MONJES 117", "zone": "15", "employees": [{"ci": "18472010", "name": "JORGE GONZALEZ"}, {"ci": "20329104", "name": "JUDITH RODRIGUEZ"}, {"ci": "19512725", "name": "ALEJANDRO DE PABLOS"}, {"ci": "15700011", "name": "YULIMAR VILLEGAS"}, {"ci": "9648145", "name": "SOCORRO I. BRICENO R."}, {"ci": "16870818", "name": "ANA CABRITA"}, {"ci": "26411164", "name": "MAIKEL ORTEGA"}, {"ci": "20363119", "name": "ALBERT CARABALLO"}, {"ci": "26194580", "name": "GUSTAVO TOLEDO"}, {"ci": "26794156", "name": "JOHANCI MEDINA"}, {"ci": "14611184", "name": "JOSERIS MONTERO"}, {"ci": "9860375", "name": "DOLORES ROMERO G."}, {"ci": "27615717", "name": "ERICA PICHARDO"}, {"ci": "19671630", "name": "JEIXON CAMACARO"}, {"ci": "30181496", "name": "YANYIMAR LOPEZ"}, {"ci": "25664097", "name": "WINFFEL BLANQUEZ"}, {"ci": "30346210", "name": "EDGARY ARELLANO"}, {"ci": "27031757", "name": "MICHAEL ESPINOZA"}, {"ci": "28652670", "name": "STEFANY ALARCON"}, {"ci": "27223635", "name": "IRIS BARRIOS"}, {"ci": "26194425", "name": "ANGIE PANTOJA"}, {"ci": "26221161", "name": "VICTOR VALDESPINO"}, {"ci": "27741342", "name": "RUDIMES FAGUNDEZ"}, {"ci": "24210451", "name": "GENESIS TERAN"}, {"ci": "30926224", "name": "MARIANA HERRERA"}, {"ci": "27615330", "name": "GABRIEL PIÑATE"}, {"ci": "31954032", "name": "ANAHIS CONTRERAS"}, {"ci": "27661756", "name": "MANUEL ARANGO"}, {"ci": "26830893", "name": "JOSE GONZALEZ"}, {"ci": "31795610", "name": "SEBASTIAN CARRILLO"}, {"ci": "30752141", "name": "EUGENIA GOMEZ"}, {"ci": "31795572", "name": "CLARIATNA BRITO"}]}, {"name": "NATALIA 194", "zone": "15", "employees": [{"ci": "5881021", "name": "RAMON RODRIGUEZ"}, {"ci": "18967873", "name": "ALEJANDRA PRIETO"}, {"ci": "16962321", "name": "ARIANNYS BARRETO"}, {"ci": "15373672", "name": "LUIS MOLEIRO"}, {"ci": "21291322", "name": "ENRIQUE SEDES"}, {"ci": "11690541", "name": "EDGAR MOLINA"}, {"ci": "16473601", "name": "JACKELINE SEGOVIA"}, {"ci": "15023618", "name": "REINA CARVAJAL"}, {"ci": "26809005", "name": "OSCAR SILVA"}, {"ci": "27784167", "name": "GABRIELA NARVAEZ"}, {"ci": "29801020", "name": "GIAIMAR ORLANDO"}, {"ci": "30765203", "name": "HAIVEL SILVA"}, {"ci": "22762524", "name": "LISBETH LAGOS"}, {"ci": "28235190", "name": "EDUARDO DIAZ"}, {"ci": "22026497", "name": "ROGER GUERRERO"}, {"ci": "28313217", "name": "JOHALISBETH CHOURIO"}, {"ci": "29686859", "name": "MARIA RODRIGUEZ"}, {"ci": "28149346", "name": "OSMEY BONILLA"}, {"ci": "29697257", "name": "ANGEL TORRES"}, {"ci": "26971944", "name": "NELSON HERRERA"}, {"ci": "28502168", "name": "GENESIS BERRIOS"}, {"ci": "27756677", "name": "LIBIA FIGUEREDO"}, {"ci": "30502342", "name": "ANIUSKA RIVAS"}, {"ci": "21581631", "name": "JOSE PEREZ"}, {"ci": "21622728", "name": "FREYMI YANCES"}, {"ci": "30520307", "name": "SAMUEL MENDOZA"}, {"ci": "29683509", "name": "LUIS PEROZO"}, {"ci": "30358351", "name": "SEBASTIAN GARCIA"}, {"ci": "24313890", "name": "RAFAEL RODRIGUEZ"}, {"ci": "27569130", "name": "GABRIEL URBINA"}, {"ci": "30927933", "name": "DANIEL BELANDRIA"}]}, {"name": "OPALO 189", "zone": "15", "employees": [{"ci": "19478052", "name": "ALEXANDER NEGRIN"}, {"ci": "18187513", "name": "EZULY AGUEY"}, {"ci": "18734435", "name": "YUSBELI RAMIREZ"}, {"ci": "20801311", "name": "ROXANA GUITIAN"}, {"ci": "18330289", "name": "YURELIS URBINA"}, {"ci": "21291166", "name": "YOURUMI FERNANDEZ"}, {"ci": "16662995", "name": "KATIUSKA OYOQUE"}, {"ci": "24125137", "name": "MARCIA GONZALEZ"}, {"ci": "29637476", "name": "YULIMAR OLIVEROS"}, {"ci": "28584635", "name": "LUIS VALERO"}, {"ci": "17704931", "name": "GALVIS MARIN"}, {"ci": "29651195", "name": "MONZZERRAT URDANETA"}, {"ci": "28175838", "name": "NICOLA PEREZ"}, {"ci": "28321823", "name": "GRACE PERNIA"}, {"ci": "27941974", "name": "BENIZ VILLAMIZAR"}, {"ci": "23943653", "name": "MERVING MARTINEZ"}, {"ci": "29664086", "name": "MADELAINE DELGADO"}, {"ci": "27379803", "name": "JESUS CALDERON"}, {"ci": "26728567", "name": "JOSE BERRIOS"}, {"ci": "27995174", "name": "GABRIELA ALMEIDA"}, {"ci": "28321833", "name": "GENESIS POLO"}, {"ci": "25470569", "name": "RICARDO DONIS"}, {"ci": "27903342", "name": "LUZMAR SUAREZ"}, {"ci": "23724947", "name": "AUDRY FERNANDEZ"}, {"ci": "30712175", "name": "YUBER PEÑAHERRERA"}, {"ci": "28126212", "name": "EMILY UZCATEGUI"}, {"ci": "23691136", "name": "LISBETH SALAZAR"}, {"ci": "32024597", "name": "IRIELYS GONZALEZ"}, {"ci": "30370970", "name": "SABRINA ROJAS"}, {"ci": "22708721", "name": "BERTHA MARCANO"}, {"ci": "27669294", "name": "GIANELLA MARTINEZ"}, {"ci": "30445038", "name": "ARISBEL BRICEÑO"}, {"ci": "28316832", "name": "JEYSON MARTINEZ"}, {"ci": "28393623", "name": "BETSY MORENO"}, {"ci": "84397349", "name": "MARCELA ESPARRAGOZA"}, {"ci": "30104210", "name": "ALEJANDRO MUÑOZ"}, {"ci": "30634990", "name": "MANUEL OROPEZA"}, {"ci": "32154166", "name": "GEOMAR CANELON"}]}, {"name": "RIOFARO 135", "zone": "15", "employees": [{"ci": "21071995", "name": "JOSUE SANTANA"}, {"ci": "25252779", "name": "KEYLA GRIMON"}, {"ci": "19568926", "name": "ROSIBEL BRICEÑO"}, {"ci": "18304717", "name": "HORACIO PARADA"}, {"ci": "18004753", "name": "NESTOR AVILA"}, {"ci": "24898831", "name": "YOHANSIBEL VELASCO"}, {"ci": "29640423", "name": "FRAIDERLY GIL"}, {"ci": "22906463", "name": "EGLEIDY FHER"}, {"ci": "30090816", "name": "ANYELIMAR YAÑES"}, {"ci": "27319008", "name": "CARLOS ALMONTE"}, {"ci": "30030447", "name": "HECTOR PULIDO"}, {"ci": "30429769", "name": "KENYERLING BOSCAN"}, {"ci": "30154040", "name": "BESIBEL RUMBO"}, {"ci": "30602916", "name": "DANIEL VALLADARES"}, {"ci": "30799265", "name": "DYLAN RANGEL"}, {"ci": "28426475", "name": "ERICK ROJAS"}, {"ci": "29567152", "name": "BRAYAN PEÑA"}, {"ci": "23641749", "name": "EUCARYS ACOSTA"}, {"ci": "25706961", "name": "GEAN ESPOSITO"}, {"ci": "31506898", "name": "ARNOLD VELASQUEZ"}, {"ci": "29768700", "name": "GYPSY ALMEIDA"}, {"ci": "31448266", "name": "VICTORIA TARACHE"}]}, {"name": "ROMANA 120", "zone": "15", "employees": [{"ci": "6682740", "name": "MARIANA GUZMAN"}, {"ci": "14203264", "name": "NOMAR CASTILLO"}, {"ci": "20652900", "name": "YADIRA DEPABLOS"}, {"ci": "25097811", "name": "YUBIANNYS LEZAMA"}, {"ci": "26312535", "name": "JOSE MADRID"}, {"ci": "19692793", "name": "SARMIENTO KATIUSKA"}, {"ci": "22036879", "name": "GERALDINE OROPEZA"}, {"ci": "29863600", "name": "MIRIAN CABARCAS"}, {"ci": "27561132", "name": "LUISYEREYMAR BRAVO"}, {"ci": "29863674", "name": "STHEFANY VALDERRAMA"}, {"ci": "30063681", "name": "MARIA GARRIDO"}, {"ci": "20478041", "name": "YOLANDA COLMENAREZ"}, {"ci": "26982063", "name": "GENESIS MUÑOZ"}, {"ci": "26071373", "name": "MALENE RIVERA"}, {"ci": "27670078", "name": "IRVIN SUAREZ"}, {"ci": "24272580", "name": "GENESIS BAUTE"}, {"ci": "30469322", "name": "JOSE HERNANDEZ"}, {"ci": "27346872", "name": "SAUL CARRIZO"}, {"ci": "30496440", "name": "MARCEL POLO"}, {"ci": "29802950", "name": "SAMUEL RAMOS"}, {"ci": "32045856", "name": "ANGEL GUIZA"}, {"ci": "32295048", "name": "JEINER APONTE"}]}, {"name": "SCARLET 171", "zone": "15", "employees": [{"ci": "16031932", "name": "LISBETH TOVAR"}, {"ci": "22359572", "name": "CARMEN RIOS"}, {"ci": "11044698", "name": "JESSICA LOPEZ"}, {"ci": "18233899", "name": "NAZARETH FLORES"}, {"ci": "9462324", "name": "CARMEN GUTIERREZ"}, {"ci": "27387042", "name": "OSCAR LAGUNA"}, {"ci": "26078404", "name": "SOPHIA PANTOJA"}, {"ci": "25896509", "name": "JESIBETH APONTE"}, {"ci": "27669542", "name": "YOSNERLYS LORENZO"}, {"ci": "26825136", "name": "JESUS HIGUERA"}, {"ci": "27669934", "name": "ROWERT VELOZ"}, {"ci": "26498372", "name": "LUIS CARRILLO"}, {"ci": "29850777", "name": "JOSE CORDOVA"}, {"ci": "22440901", "name": "ANYERSON QUINTERO"}, {"ci": "29951911", "name": "ARIANNA HERNANDEZ"}, {"ci": "26230363", "name": "NATHALY RIVERA"}, {"ci": "24886647", "name": "ANDREA ARAUJO"}, {"ci": "28294757", "name": "ANGEL FLORES"}, {"ci": "29751832", "name": "DEIVER PEREZ"}, {"ci": "28210454", "name": "ARIANA RUZA"}, {"ci": "30666703", "name": "ALEXA BAPTISTA"}, {"ci": "28306979", "name": "FREDERICK LUGO"}, {"ci": "30667662", "name": "ELEANGEL NOGUERA"}, {"ci": "28463368", "name": "NATASHA PLANAS"}, {"ci": "25231441", "name": "EDGAR USECHE"}, {"ci": "26725701", "name": "JOSE KEY"}, {"ci": "28175794", "name": "DORIAN CONTRERAS"}, {"ci": "30542599", "name": "LEANDRO PACHECO"}, {"ci": "27988446", "name": "HECTOR GARCIA"}, {"ci": "22048043", "name": "DANIELA ESCOBAR"}, {"ci": "12834575", "name": "MARY F. CARRION G."}, {"ci": "30051935", "name": "JEREMY MORENO"}, {"ci": "29511938", "name": "KLEYBERTH CASTRO"}, {"ci": "30051708", "name": "SAMIRA VERAZA"}, {"ci": "28463190", "name": "WILLIAN CENTENO"}, {"ci": "28306701", "name": "SCARLET BORGES"}, {"ci": "29622202", "name": "NAYERLI MOLINA"}, {"ci": "29850832", "name": "YORLUY RIVERA"}, {"ci": "27669969", "name": "CHRISMAR LEON"}, {"ci": "31962210", "name": "JOSE LUGO"}]}, {"name": "SUSANA 114", "zone": "15", "employees": [{"ci": "13993925", "name": "OMILSA PERDOMO"}, {"ci": "16325804", "name": "BALMORE MENDEZ"}, {"ci": "17498862", "name": "DAVID GONZATTI"}, {"ci": "24455950", "name": "ORIANI CONTRERAS"}, {"ci": "14401220", "name": "DIANE SALAZAR"}, {"ci": "26384556", "name": "MISAEL PACHECO"}, {"ci": "27497400", "name": "VICTOR GARCIA"}, {"ci": "26958728", "name": "ALBANI GRANADOS"}, {"ci": "25223098", "name": "CARMEN YENDEZ"}, {"ci": "29666479", "name": "GLEIBER ISCALA"}, {"ci": "28104669", "name": "PAOLA ESTABA"}, {"ci": "19084533", "name": "MARIA JAUREGUI"}, {"ci": "26573448", "name": "ANGELICA GARCIA"}, {"ci": "27426034", "name": "YELIMAR RAMIREZ"}, {"ci": "27862717", "name": "RICARDO ESCORCIA"}, {"ci": "28604813", "name": "ELIZABETH MARIN"}, {"ci": "28180855", "name": "GABRIEL PEDRAZA"}, {"ci": "31229970", "name": "DIEGO MARTINEZ"}, {"ci": "31769013", "name": "SANTIAGO GARCIA"}, {"ci": "15725459", "name": "ANA LADERA"}, {"ci": "27516201", "name": "KAREN JIMENEZ"}, {"ci": "28410863", "name": "KEVIN LAURENS"}]}, {"name": "VENTUARI 188", "zone": "15", "employees": [{"ci": "16884026", "name": "YARICEGLIZ CHAVEZ"}, {"ci": "16259320", "name": "DANIEL CALDERON"}, {"ci": "11567074", "name": "NARYELLIS CARTAGENA"}, {"ci": "13563877", "name": "LETICIA CORRO"}, {"ci": "18899139", "name": "MARIA VIREL"}, {"ci": "18029525", "name": "MAYRA LEDEZMA"}, {"ci": "20328749", "name": "YISBELYS BUSTAMANTE"}, {"ci": "18493381", "name": "JERALDYNETT LA ROSA"}, {"ci": "24883354", "name": "DAYANA SALAS"}, {"ci": "23622934", "name": "ALBERTO DE BARROS"}, {"ci": "25866444", "name": "RISYORLEY GARCIA"}, {"ci": "20135818", "name": "GENESIS DAVILA"}, {"ci": "24315681", "name": "ANDREINA REYES"}, {"ci": "25211983", "name": "YGMARY RIVERO"}, {"ci": "29637860", "name": "DARWIN RIVERO"}, {"ci": "23714761", "name": "HAYMAR SOJO"}, {"ci": "27099304", "name": "PAUL ESCALONA"}, {"ci": "30063306", "name": "MARLEANGELA TORRES"}, {"ci": "19194045", "name": "MICHELL RAMIREZ"}, {"ci": "28300419", "name": "JAIVERLY SALAS"}, {"ci": "29608085", "name": "YURANGELI AVARIANO"}, {"ci": "27234370", "name": "REYBER ECHARRY"}, {"ci": "13333223", "name": "GLADYS FERNANDEZ"}, {"ci": "27745087", "name": "JOSELING PEREZ"}, {"ci": "24332892", "name": "ROSA OLAIZOLA"}, {"ci": "30926393", "name": "MICHELLE MORALES"}, {"ci": "29826403", "name": "JOANDER RAMIREZ"}, {"ci": "25867280", "name": "BARBARA RAMONES"}, {"ci": "29922983", "name": "RONARD ROJAS"}, {"ci": "10628876", "name": "ANN CHANG"}, {"ci": "18695887", "name": "ARISLEIDYS VILLASMIL"}, {"ci": "32110782", "name": "KEIVERSON PALACIOS"}, {"ci": "31217505", "name": "FREYDER CARRILLO"}, {"ci": "31794172", "name": "SHIJANY MORENO"}, {"ci": "30805281", "name": "ALIKSON AGREDA"}, {"ci": "26574962", "name": "NAIROVI ALGARIN"}, {"ci": "27038582", "name": "LEONEL PINTO"}, {"ci": "30861993", "name": "MARIANA SALAZAR"}, {"ci": "27332684", "name": "MIGUEL BRACHO"}, {"ci": "31769071", "name": "JESUS LUGO"}]}];
+const SM      = {"ALBITA 157": "ALBITA 157", "ALBITA": "ALBITA 157", "AMBAR 140": "AMBAR 140", "AMBAR": "AMBAR 140", "CARLOTA": "CARLOTA", "CUARZO": "CUARZO", "INDIGO 141": "INDIGO 141", "INDIGO": "INDIGO 141", "LA CASTELLANA 126": "LA CASTELLANA 126", "LA CASTELLANA": "LA CASTELLANA 126", "LUZMAR 142": "LUZMAR 142", "LUZMAR": "LUZMAR 142", "MELANIE 119": "MELANIE 119", "MELANIE": "MELANIE 119", "MÚCURA 154": "MÚCURA 154", "MÚCURA": "MÚCURA 154", "MUCURA 154": "MÚCURA 154", "MUCURA": "MÚCURA 154", "NACAR 148": "NACAR 148", "NACAR": "NACAR 148", "RUBI 145": "RUBI 145", "RUBI": "RUBI 145", "TEO 125": "TEO 125", "TEO": "TEO 125", "TOBOGAN 113": "TOBOGAN 113", "TOBOGAN": "TOBOGAN 113", "CAMINITO 190": "CAMINITO 190", "CAMINITO": "CAMINITO 190", "CORINA 116": "CORINA 116", "CORINA": "CORINA 116", "GRANATE 199": "GRANATE 199", "GRANATE": "GRANATE 199", "JENNIFER": "JENNIFER", "JUAN BAUTISTA": "JUAN BAUTISTA", "LA JOYA 152": "LA JOYA 152", "LA JOYA": "LA JOYA 152", "LIDER": "LIDER", "MIRENA 115": "MIRENA 115", "MIRENA": "MIRENA 115", "MONTANAL 150": "MONTANAL 150", "MONTANAL": "MONTANAL 150", "NELLYS 187": "NELLYS 187", "NELLYS": "NELLYS 187", "OCUMITO 196": "OCUMITO 196", "OCUMITO": "OCUMITO 196", "SAN PASTOR 192": "SAN PASTOR 192", "SAN PASTOR": "SAN PASTOR 192", "SETENTA 111": "SETENTA 111", "SETENTA": "SETENTA 111", "TURQUESA 198": "TURQUESA 198", "TURQUESA": "TURQUESA 198", "VERTIENTE 197": "VERTIENTE 197", "VERTIENTE": "VERTIENTE 197", "ACONCAGUA 128": "ACONCAGUA 128", "ACONCAGUA": "ACONCAGUA 128", "ALTOZANO 170": "ALTOZANO 170", "ALTOZANO": "ALTOZANO 170", "DANILA": "DANILA", "GRISELDA 195": "GRISELDA 195", "GRISELDA": "GRISELDA 195", "LOS JARDINES DEL VALLE": "LOS JARDINES DEL VALLE", "MARFIL 147": "MARFIL 147", "MARFIL": "MARFIL 147", "MONJES 117": "MONJES 117", "MONJES": "MONJES 117", "NATALIA 194": "NATALIA 194", "NATALIA": "NATALIA 194", "OPALO 189": "OPALO 189", "OPALO": "OPALO 189", "RIOFARO 135": "RIOFARO 135", "RIOFARO": "RIOFARO 135", "ROMANA 120": "ROMANA 120", "ROMANA": "ROMANA 120", "SCARLET 171": "SCARLET 171", "SCARLET": "SCARLET 171", "SUSANA 114": "SUSANA 114", "SUSANA": "SUSANA 114", "VENTUARI 188": "VENTUARI 188", "VENTUARI": "VENTUARI 188", "CASTELLANA": "LA CASTELLANA 126", "CASTELLANA 126": "LA CASTELLANA 126", "JOYA": "LA JOYA 152", "JOYA 152": "LA JOYA 152", "PASTOR": "SAN PASTOR 192", "JARDINES DEL VALLE": "LOS JARDINES DEL VALLE", "JARDINES": "LOS JARDINES DEL VALLE", "LOS JARDINES": "LOS JARDINES DEL VALLE"};
+const BY_ZONE = {"01": ["ALBITA 157", "AMBAR 140", "CARLOTA", "CUARZO", "INDIGO 141", "LA CASTELLANA 126", "LUZMAR 142", "MELANIE 119", "MÚCURA 154", "NACAR 148", "RUBI 145", "TEO 125", "TOBOGAN 113"], "05": ["CAMINITO 190", "CORINA 116", "GRANATE 199", "JENNIFER", "JUAN BAUTISTA", "LA JOYA 152", "LIDER", "MIRENA 115", "MONTANAL 150", "NELLYS 187", "OCUMITO 196", "SAN PASTOR 192", "SETENTA 111", "TURQUESA 198", "VERTIENTE 197"], "15": ["ACONCAGUA 128", "ALTOZANO 170", "DANILA", "GRISELDA 195", "LOS JARDINES DEL VALLE", "MARFIL 147", "MONJES 117", "NATALIA 194", "OPALO 189", "RIOFARO 135", "ROMANA 120", "SCARLET 171", "SUSANA 114", "VENTUARI 188"]};
+const PROXY   = "https://script.google.com/macros/s/AKfycbwCJ3tXx-kLXM4Ix9JqUb9yjkt0GUfZSWhYvcWbQ8c3G6-vwOrue3D13dzx4R7UcvVGRw/exec";
+const ADMIN_PIN = "SHA2026";
+const ZONES   = ["01","05","15"];
+const ZC = {
+  "01":{bg:"#E6F1FB",color:"#0C447C",border:"#b3d4f5",label:"Zona 01"},
+  "05":{bg:"#EAF3DE",color:"#27500A",border:"#bbdda0",label:"Zona 05"},
+  "15":{bg:"#EEEDFE",color:"#3C3489",border:"#c4c2f7",label:"Zona 15"}
+};
+const SC = {
+  complete:{cc:"s-c",bc:"b-c",badge:"✓ Completo 2/2",fill:"#16a34a",w:100},
+  partial: {cc:"s-p",bc:"b-p",badge:"⚠ Parcial 1/2", fill:"#f59e0b",w:50},
+  none:    {cc:"s-n",bc:"b-n",badge:"✕ Sin postular",fill:"#dc2626",w:0},
+};
+const BRIG = {
+  B1:{label:"Brigadista 1",fecha1:"16 jun",fecha2:"23 jun",dia:"Martes"},
+  B2:{label:"Brigadista 2",fecha1:"18 jun",fecha2:"25 jun",dia:"Jueves"}
+};
+
+let PD={},POSTULACIONES=[],ASISTENCIA=[],currentTab='postulacion',adminUnlocked=false;
+let countdownTimer=null;
+
+function normCI(v){return String(v||"").replace(/\D/g,"").replace(/^0+/,"");}
+function matchStore(name){
+  const key=String(name||"").trim().toUpperCase()
+    .replace(/[ÁÀÂÄ]/g,"A").replace(/[ÉÈÊË]/g,"E").replace(/[ÍÌÎÏ]/g,"I")
+    .replace(/[ÓÒÔÖ]/g,"O").replace(/[ÚÙÛÜ]/g,"U").replace(/Ñ/g,"N");
+  if(SM[key])return SM[key];
+  for(const [k,v]of Object.entries(SM)){if(k.startsWith(key)||key.startsWith(k))return v;}
+  return name;
+}
+function jsonp(url, timeout=8000){
+  return new Promise((resolve,reject)=>{
+    const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const t=setTimeout(()=>{delete window[cb];s.remove();reject(new Error("Timeout — proxy no responde"));},timeout);
+    window[cb]=d=>{clearTimeout(t);delete window[cb];s.remove();resolve(d);};
+    s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;
+    s.onerror=()=>{clearTimeout(t);delete window[cb];s.remove();reject(new Error("Error de conexión con el proxy"));};
+    document.head.appendChild(s);
+  });
+}
+function jsonpPost(params, timeout=8000){
+  return new Promise((resolve,reject)=>{
+    const cb="cb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const s=document.createElement('script');
+    const t=setTimeout(()=>{delete window[cb];s.remove();reject(new Error("Timeout al guardar"));},timeout);
+    window[cb]=d=>{clearTimeout(t);delete window[cb];s.remove();resolve(d);};
+    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(String(v))).join('&');
+    s.src=PROXY+'?'+qs;
+    s.onerror=()=>{clearTimeout(t);delete window[cb];s.remove();reject(new Error("Error al guardar"));};
+    document.head.appendChild(s);
+  });
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────
+let pendingTab='';
+function requireAdmin(tab){
+  if(adminUnlocked){showTab(tab);return;}
+  pendingTab=tab;
+  document.getElementById('admin-modal').style.display='flex';
+  document.getElementById('admin-input').value='';
+  document.getElementById('admin-err').textContent='';
+  setTimeout(()=>document.getElementById('admin-input').focus(),100);
+}
+function checkAdmin(){
+  const val=document.getElementById('admin-input').value.trim();
+  if(val===ADMIN_PIN){
+    adminUnlocked=true;
+    document.getElementById('admin-modal').style.display='none';
+    // Desbloquear tabs visualmente
+    document.querySelectorAll('.tab-locked').forEach(t=>{
+      t.classList.remove('tab-locked');
+      t.textContent=t.textContent.replace(' 🔒','');
+    });
+    showTab(pendingTab);
+  }else{
+    document.getElementById('admin-err').textContent='Código incorrecto.';
+    const inp=document.getElementById('admin-input');
+    inp.classList.add('shake');inp.value='';
+    setTimeout(()=>inp.classList.remove('shake'),400);
+    inp.focus();
+  }
+}
+function closeAdmin(){
+  document.getElementById('admin-modal').style.display='none';
+}
+
+// ── CARGA ────────────────────────────────────────────────────
+async function loadData(){
+  const isFirstLoad = document.getElementById('global-loading').style.display !== 'none' 
+    && document.getElementById('tab-postulacion').classList.contains('hidden');
+  
+  if(isFirstLoad){
+    // Primera carga: mostrar el formulario de inmediato sin esperar datos
+    document.getElementById('global-loading').style.display='none';
+    showTab('postulacion');
+    document.getElementById('hm-pct').textContent='…';
+    document.getElementById('hm-sub').textContent='cargando...';
+  }
+  
+  document.getElementById('btn').textContent='↻ Cargando...';
+  document.getElementById('global-err').classList.add('hidden');
+
+  try{
+    let rPost={ok:true,rows:[]}, rAsis={ok:true,rows:[]};
+    try{ rPost=await jsonp(PROXY+'?sheet=postulaciones',8000); }
+    catch(e){ console.warn('postulaciones:',e.message); rPost={ok:true,rows:[]}; }
+    try{ rAsis=await jsonp(PROXY+'?sheet=asistencia',8000); }
+    catch(e){ console.warn('asistencia:',e.message); rAsis={ok:true,rows:[]}; }
+
+    POSTULACIONES=rPost.ok?rPost.rows:[];
+    ASISTENCIA   =rAsis.ok?rAsis.rows:[];
+    PD={};
+    for(const r of POSTULACIONES){
+      const store=matchStore(r["Centro de Trabajo"]||"");
+      if(!PD[store])PD[store]=[];
+      const ci=normCI(r["CI"]);
+      if(ci)PD[store].push({ci,name:r["Nombre"]||"",brig:r["Brigadista"]||""});
+    }
+    document.getElementById('btn').textContent='↻ '+new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('report-date').textContent='Generado: '+new Date().toLocaleDateString('es-VE',{day:'2-digit',month:'long',year:'numeric'});
+    renderGlobal(); render(); renderAsistencia(); renderReporte(); renderGestion();
+    onTiendaChange();
+    if(!isFirstLoad) showTab(currentTab);
+  }catch(e){
+    document.getElementById('btn').textContent='↻ Actualizar';
+    const el=document.getElementById('global-err');
+    // Solo mostrar error si el formulario no está visible
+    if(document.getElementById('tab-postulacion').classList.contains('hidden')){
+      el.classList.remove('hidden');
+      el.innerHTML='<strong>Error al conectar:</strong> '+e.message+'<br><button onclick="loadData()" style="background:#dc2626;color:#fff;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;margin-top:6px">Reintentar</button>';
+    }
+    console.error('loadData error:',e);
+  }
+}
+
+function showTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const tabEl=document.getElementById('t-'+tab);
+  if(tabEl)tabEl.classList.add('active');
+  ['postulacion','indicador','asistencia','reporte','gestion'].forEach(t=>
+    document.getElementById('tab-'+t).classList.add('hidden'));
+  document.getElementById('tab-'+tab).classList.remove('hidden');
+}
+
+// ── FORMULARIO ────────────────────────────────────────────────
+function onZonaChange(){
+  const zona=document.getElementById('f-zona').value;
+  const sel=document.getElementById('f-tienda');
+  sel.innerHTML='<option value="">— Selecciona tienda —</option>';
+  sel.disabled=!zona;
+  if(zona)(BY_ZONE[zona]||[]).forEach(n=>{
+    const o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
+  });
+  onTiendaChange();
+}
+
+function getTiendaSlots(tienda){
+  if(!tienda)return{B1:null,B2:null};
+  const subs=PD[tienda]||[];
+  return{B1:subs.find(s=>s.brig==='B1')||null,B2:subs.find(s=>s.brig==='B2')||null};
+}
+
+function onTiendaChange(){
+  const tienda=document.getElementById('f-tienda').value;
+  const slots=getTiendaSlots(tienda);
+  loadPanel('b1',slots.B1);
+  loadPanel('b2',slots.B2);
+  validateForm();
+}
+
+function loadPanel(id,occupied){
+  const ciInp =document.getElementById(id+'-ci');
+  const nmInp =document.getElementById(id+'-nombre');
+  const tag   =document.getElementById(id+'-reg-tag');
+  const panel =document.getElementById('panel-'+id);
+  const hdr   =panel.querySelector('.brig-panel-header');
+  if(occupied){
+    ciInp.value=occupied.ci; nmInp.value=occupied.name;
+    ciInp.readOnly=true; nmInp.readOnly=true;
+    ciInp.classList.add('registered'); nmInp.classList.add('registered');
+    tag.classList.remove('hidden');
+    hdr.className='brig-panel-header occ-header';
+  }else{
+    ciInp.value=''; nmInp.value='';
+    ciInp.readOnly=false; nmInp.readOnly=false;
+    ciInp.classList.remove('registered'); nmInp.classList.remove('registered');
+    tag.classList.add('hidden');
+    hdr.className='brig-panel-header '+(id==='b1'?'b1-header':'b2-header');
+  }
+}
+
+function validateForm(){
+  const tienda=document.getElementById('f-tienda').value;
+  const btn=document.getElementById('submit-btn');
+  if(!tienda){btn.disabled=true;return;}
+  const slots=getTiendaSlots(tienda);
+  if(slots.B1&&slots.B2){btn.disabled=true;btn.textContent='✓ Tienda ya registrada';return;}
+  const b1ci=normCI(document.getElementById('b1-ci').value);
+  const b1nm=document.getElementById('b1-nombre').value.trim();
+  const b2ci=normCI(document.getElementById('b2-ci').value);
+  const b2nm=document.getElementById('b2-nombre').value.trim();
+  const b1ok=slots.B1||(b1ci.length>=4&&b1nm.length>=2);
+  const b2ok=slots.B2||(b2ci.length>=4&&b2nm.length>=2);
+  btn.disabled=!(b1ok&&b2ok);
+  if(slots.B1)btn.textContent='Registrar Brigadista 2';
+  else if(slots.B2)btn.textContent='Registrar Brigadista 1';
+  else btn.textContent='Registrar Ambos Brigadistas';
+}
+
+async function postular(){
+  const zona  =document.getElementById('f-zona').value;
+  const tienda=document.getElementById('f-tienda').value;
+  const slots =getTiendaSlots(tienda);
+  const btn   =document.getElementById('submit-btn');
+  const errEl =document.getElementById('post-err');
+  btn.disabled=true;btn.textContent='Registrando...';errEl.classList.add('hidden');
+  const toReg=[];
+  if(!slots.B1){
+    const ci=normCI(document.getElementById('b1-ci').value);
+    const nm=document.getElementById('b1-nombre').value.trim();
+    if(ci&&nm)toReg.push({brig:'B1',ci,nombre:nm,fecha1:BRIG.B1.fecha1,fecha2:BRIG.B1.fecha2});
+  }
+  if(!slots.B2){
+    const ci=normCI(document.getElementById('b2-ci').value);
+    const nm=document.getElementById('b2-nombre').value.trim();
+    if(ci&&nm)toReg.push({brig:'B2',ci,nombre:nm,fecha1:BRIG.B2.fecha1,fecha2:BRIG.B2.fecha2});
+  }
+  try{
+    const errors=[];
+    for(const r of toReg){
+      const res=await jsonpPost({action:'postular',zona,tienda,ci:r.ci,nombre:r.nombre,brigadista:r.brig,fecha1:r.fecha1,fecha2:r.fecha2});
+      if(!res.ok)errors.push(r.brig+': '+res.error);
+    }
+    if(errors.length){
+      errEl.classList.remove('hidden');
+      errEl.textContent='✗ '+errors.join(' | ');
+      btn.disabled=false;validateForm();return;
+    }
+    // Recargar para tener datos actualizados
+    await loadData();
+    // Después de loadData, buscar los slots con la tienda que acabamos de registrar
+    const slots2=getTiendaSlots(tienda);
+    mostrarConfirmacion(zona,tienda,slots2,toReg);
+  }catch(e){
+    errEl.classList.remove('hidden');
+    errEl.textContent='✗ Error: '+e.message;
+    btn.disabled=false;validateForm();
+  }
+}
+
+function mostrarConfirmacion(zona,tienda,slots,registrados){
+  if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+  document.getElementById('form-section').style.display='none';
+  const box=document.getElementById('confirm-box');
+  box.style.display='block';
+  document.getElementById('confirm-sub').textContent='Brigadistas registrados en '+tienda+' ('+( ZC[zona]?ZC[zona].label:zona)+')';
+
+  // Tarjetas de personas
+  const peopleEl=document.getElementById('confirm-people');
+  peopleEl.innerHTML='';
+  ['B1','B2'].forEach(b=>{
+    const s=slots[b]; if(!s)return;
+    const cfg=BRIG[b];
+    const isNew=registrados.find(r=>r.brig===b);
+    const div=document.createElement('div');
+    div.className='confirm-person';
+    div.innerHTML=`
+      <div class="cp-role" style="color:${b==='B1'?'#1e40af':'#5b21b6'}">${cfg.label}${isNew?' · Nuevo':' · Ya registrado'}</div>
+      <div class="cp-name">${s.name}</div>
+      <div class="cp-ci">C.I. ${s.ci}</div>
+      <div class="cp-dates">📅 ${cfg.fecha1} · ${cfg.fecha2}</div>`;
+    peopleEl.appendChild(div);
+  });
+
+  // Botones de invitación — descarga PNG
+  const invEl=document.getElementById('inv-btns');
+  invEl.innerHTML='<div style="font-size:11px;color:#15803d;font-weight:600;margin-bottom:8px;width:100%">Descargar invitaciones personalizadas:</div>';
+  ['B1','B2'].forEach(b=>{
+    const s=slots[b]; if(!s)return;
+    const btn2=document.createElement('button');
+    btn2.className='inv-btn '+(b==='B1'?'inv-btn-b1':'inv-btn-b2');
+    btn2.innerHTML='🖼️ Invitación '+b+' — '+s.name.split(' ')[0]+' (PNG)';
+    btn2.onclick=((_s,_b,_z,_t)=>()=>generarInvitacionPNG(_s.ci,_s.name,_b,_t,_z))(s,b,zona,tienda);
+    invEl.appendChild(btn2);
+  });
+}
+
+function volverAlInicio(){
+  if(countdownTimer){clearInterval(countdownTimer);countdownTimer=null;}
+  document.getElementById('confirm-box').style.display='none';
+  document.getElementById('form-section').style.display='block';
+  document.getElementById('f-zona').value='';
+  const sel=document.getElementById('f-tienda');
+  sel.innerHTML='<option value="">— Primero selecciona zona —</option>';
+  sel.disabled=true;
+  loadPanel('b1',null); loadPanel('b2',null);
+  validateForm();
+  document.getElementById('post-err').classList.add('hidden');
+}
+
+// ── INDICADOR ────────────────────────────────────────────────
+function cpl(name){
+  const u=[...new Set((PD[name]||[]).map(s=>s.ci).filter(Boolean))];
+  return u.length>=2?"complete":u.length===1?"partial":"none";
+}
+function metricCards(subset,fs){
+  const t=subset.length,c=subset.filter(s=>cpl(s.name)==="complete").length;
+  const p=subset.filter(s=>cpl(s.name)==="partial").length,n=subset.filter(s=>cpl(s.name)==="none").length;
+  const pct=t>0?Math.round(c/t*100):0;
+  return{pct,html:[
+    {l:"Tiendas",v:t,color:"#0f172a",s:"selección"},
+    {l:"Cumplimiento",v:pct+"%",color:"#16a34a",s:c+" con 2/2"},
+    {l:"Completo 2/2",v:c,color:"#16a34a",s:"tiendas"},
+    {l:"Parcial 1/2",v:p,color:"#d97706",s:"tiendas"},
+    {l:"Sin postular",v:n,color:"#dc2626",s:"tiendas"},
+  ].map(m=>`<div class="metric"><div class="ml">${m.l}</div><div class="mv" style="color:${m.color};font-size:${fs||"20px"}">${m.v}</div><div class="ms">${m.s}</div></div>`).join('')};
+}
+function renderGlobal(){
+  const{pct,html}=metricCards(SD,"20px");
+  document.getElementById('sg').innerHTML=html;
+  document.getElementById('pg').style.width=pct+'%';
+  const comp=SD.filter(s=>cpl(s.name)==="complete").length;
+  document.getElementById('hm-pct').textContent=pct+'%';
+  document.getElementById('hm-sub').textContent=comp+' / '+SD.length+' tiendas';
+}
+function renderZoneBox(zf){
+  const box=document.getElementById('zbox');
+  if(!zf){box.style.display='none';return;}
+  const zc=ZC[zf],subset=SD.filter(s=>s.zone===zf);
+  const{pct,html}=metricCards(subset,"16px");
+  box.style.cssText=`display:block;border-color:${zc.border};background:${zc.bg}44;border-radius:10px;border:1px solid ${zc.border};padding:10px 14px;margin-bottom:12px`;
+  box.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="background:${zc.bg};color:${zc.color};font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px">${zc.label}</span>
+    <span style="font-size:10px;color:#64748b">Indicador de zona</span></div>
+    <div class="sgrid">${html}</div>
+    <div class="prog-bg" style="margin-bottom:0"><div class="prog-fill" style="width:${pct}%;background:${zc.color}"></div></div>`;
+}
+function resetFilters(){
+  document.getElementById('search').value='';
+  document.getElementById('zoneF').value='';
+  document.getElementById('statusF').value='';
+  render();
+}
+function render(){
+  const srch=(document.getElementById('search').value||'').toLowerCase();
+  const zf=document.getElementById('zoneF').value,sf=document.getElementById('statusF').value;
+  renderZoneBox(zf);
+  const filtered=SD.filter(s=>{
+    if(srch&&!s.name.toLowerCase().includes(srch))return false;
+    if(zf&&s.zone!==zf)return false;
+    if(sf&&cpl(s.name)!==sf)return false;
+    return true;
+  });
+  document.getElementById('cnt').textContent=filtered.length+' tiendas';
+  const grp={};filtered.forEach(s=>{if(!grp[s.zone])grp[s.zone]=[];grp[s.zone].push(s);});
+  let html='';
+  for(const z of ZONES){
+    const arr=grp[z]||[];if(!arr.length)continue;
+    const zc=ZC[z],zComp=arr.filter(s=>cpl(s.name)==="complete").length;
+    html+=`<div class="zh"><span class="zchip" style="background:${zc.bg};color:${zc.color}">${zc.label}</span><div class="zline"></div><span class="zct">${zComp}/${arr.length} completas</span></div>`;
+    for(const store of arr){
+      const subs=PD[store.name]||[];
+      const seen=new Set(),uniq=[];
+      for(const s of subs){if(s.ci&&!seen.has(s.ci)){seen.add(s.ci);uniq.push(s);}}
+      const st=cpl(store.name),C=SC[st];
+      let chips='';
+      for(let i=0;i<2;i++){
+        const sub=uniq[i];
+        if(!sub){chips+=`<span class="chip-e">👤 B${i+1} pendiente</span>`;continue;}
+        const bl=sub.brig?`<span style="font-size:9px;background:#f1f5f9;padding:1px 4px;border-radius:3px;color:#64748b">${sub.brig}</span>`:'';
+        chips+=`<span class="chip"><span class="dot" style="background:#16a34a"></span><strong>${sub.ci}</strong> · ${sub.name.split(' ').slice(0,2).join(' ')} ${bl}</span>`;
+      }
+      html+=`<div class="sc ${C.cc}"><div class="sr"><span class="sn">${store.name}</span><span class="sb ${C.bc}">${C.badge}</span></div><div class="bb"><div class="bf" style="width:${C.w}%;background:${C.fill}"></div></div><div class="chips">${chips}</div></div>`;
+    }
+  }
+  if(!html)html='<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:13px">No hay tiendas que coincidan.</div>';
+  document.getElementById('stores').innerHTML=html;
+}
+
+// ── ASISTENCIA ───────────────────────────────────────────────
+function getAsistencia(ci,fecha){
+  const r=ASISTENCIA.find(a=>normCI(a["CI"])===normCI(ci)&&a["Fecha"]===fecha);
+  return r?r["Asistio"]:null;
+}
+async function toggleAsistencia(ci,nm,zona,tienda,brig,fecha,asistio){
+  try{
+    const res=await jsonpPost({action:'asistencia',ci,nombre:nm,zona,tienda,modulo:brig,fecha,asistio:String(asistio),marcadoPor:'SHA'});
+    if(res.ok)await loadData();
+    else alert('Error: '+res.error);
+  }catch(e){alert('Error: '+e.message);}
+}
+function renderAsistencia(){
+  const zf=document.getElementById('a-zona').value;
+  const ff=document.getElementById('a-fecha').value;
+  const rows=POSTULACIONES.filter(p=>!zf||p["Zona"]===zf);
+  document.getElementById('a-count').textContent=rows.length+' postulados';
+  if(!rows.length){document.getElementById('asis-content').innerHTML='<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:13px">No hay postulaciones aún.</div>';return;}
+  const byTienda={};
+  rows.forEach(r=>{const t=r["Centro de Trabajo"]||"—";if(!byTienda[t])byTienda[t]=[];byTienda[t].push(r);});
+  let html='';
+  for(const [tienda,list] of Object.entries(byTienda)){
+    const zona=list[0]["Zona"]||"";
+    const zc=ZC[zona]||{bg:"#f1f5f9",color:"#0f172a",label:zona};
+    html+=`<div style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="background:${zc.bg};color:${zc.color};font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">${zc.label}</span>
+        <span style="font-size:13px;font-weight:500">${tienda}</span>
+      </div>
+      <table class="asis-table">
+        <thead><tr><th>CI</th><th>Nombre</th><th>Rol</th><th>16 jun</th><th>18 jun</th><th>23 jun</th><th>25 jun</th><th>Invitación</th></tr></thead>
+        <tbody>`;
+    list.forEach(p=>{
+      const ci=p["CI"],nm=p["Nombre"],brig=p["Brigadista"]||"";
+      if(ff&&p["Fecha1"]!==ff&&p["Fecha2"]!==ff)return;
+      function btn(fecha,activa){
+        if(!activa)return`<td style="color:#e2e8f0;text-align:center">·</td>`;
+        const a=getAsistencia(ci,fecha);
+        const cls=a==='SI'?'check-si':a==='NO'?'check-no':'check-pend';
+        const lbl=a==='SI'?'✓ Asistió':a==='NO'?'✗ No asistió':'— Marcar';
+        return`<td><button class="check-btn ${cls}" onclick="toggleAsistencia('${ci}','${nm.replace(/'/g,"\'")}','${zona}','${tienda.replace(/'/g,"\'")}','${brig}','${fecha}',${a==='SI'?'false':'true'})">${lbl}</button></td>`;
+      }
+      html+=`<tr>
+        <td><strong>${ci}</strong></td><td>${nm}</td>
+        <td><span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:${brig==='B1'?'#dbeafe':'#ede9fe'};color:${brig==='B1'?'#1e40af':'#5b21b6'}">${brig}</span></td>
+        ${btn('16 jun',brig==='B1')}${btn('18 jun',brig==='B2')}${btn('23 jun',true)}${btn('25 jun',brig==='B2')}
+        <td><button onclick="generarInvitacionPNG('${ci}','${nm.replace(/'/g,"\'")}','${brig}','${tienda.replace(/'/g,"\'")}','${zona}')"
+          style="font-size:11px;padding:3px 10px;border-radius:6px;border:1px solid ${brig==='B1'?'#b3d4f5':'#ddd6fe'};background:${brig==='B1'?'#e6f1fb':'#f5f3ff'};color:${brig==='B1'?'#0c447c':'#5b21b6'};cursor:pointer">⬇</button></td>
+      </tr>`;
+    });
+    html+=`</tbody></table></div>`;
+  }
+  document.getElementById('asis-content').innerHTML=html||'<div style="text-align:center;padding:2rem;color:#94a3b8;font-size:13px">Sin resultados.</div>';
+}
+
+// ── REPORTE ──────────────────────────────────────────────────
+function renderReporte(){
+  const ZL={'01':'Zona 01','05':'Zona 05','15':'Zona 15'};
+  const post=[],nop=[];
+  for(const store of SD){
+    const subs=PD[store.name]||[];
+    const seen=new Set(),uniq=[];
+    for(const s of subs){if(s.ci&&!seen.has(s.ci)){seen.add(s.ci);uniq.push(s);}}
+    if(cpl(store.name)==='none')nop.push(store);
+    else post.push({store,uniq,st:cpl(store.name)});
+  }
+  const stBg={complete:'#f0fdf4',partial:'#fffbeb'};
+  const stCl={complete:'#15803d',partial:'#92400e'};
+  const stLb={complete:'✓ Completo 2/2',partial:'⚠ Parcial 1/2'};
+  function ar(sub,b){
+    if(!sub)return{ci:'—',nm:'—',a1:'—',a2:'—'};
+    const f=BRIG[b]||{fecha1:'',fecha2:''};
+    return{ci:sub.ci,nm:sub.name,a1:getAsistencia(sub.ci,f.fecha1)||'—',a2:getAsistencia(sub.ci,f.fecha2)||'—'};
+  }
+  let html=`<div class="rsection"><div class="rsection-title">
+    <span style="width:8px;height:8px;border-radius:50%;background:#16a34a;display:inline-block"></span>
+    Postularon (${post.length} tiendas)</div>
+    <table class="rtable"><thead><tr>
+      <th>Zona</th><th>Tienda</th><th>Estado</th>
+      <th>B1 — CI</th><th>B1 — Nombre</th><th>16 jun</th><th>23 jun</th>
+      <th>B2 — CI</th><th>B2 — Nombre</th><th>18 jun</th><th>25 jun</th><th>Inv.</th>
+    </tr></thead><tbody>`;
+  post.forEach(({store,uniq,st})=>{
+    const zc=ZC[store.zone]||{bg:"#f1f5f9",color:"#0f172a"};
+    const b1=ar(uniq.find(u=>u.brig==='B1'),'B1');
+    const b2=ar(uniq.find(u=>u.brig==='B2'),'B2');
+    html+=`<tr>
+      <td><span class="badge-z" style="background:${zc.bg};color:${zc.color}">${ZL[store.zone]||store.zone}</span></td>
+      <td><strong>${store.name}</strong></td>
+      <td><span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:${stBg[st]};color:${stCl[st]}">${stLb[st]}</span></td>
+      <td>${b1.ci}</td><td>${b1.nm}</td><td>${b1.a1}</td><td>${b1.a2}</td>
+      <td>${b2.ci}</td><td>${b2.nm}</td><td>${b2.a1}</td><td>${b2.a2}</td>
+      <td style="white-space:nowrap">
+        ${b1.ci!=='—'?`<button onclick="generarInvitacionPNG('${b1.ci}','${b1.nm.replace(/'/g,"\'")}','B1','${store.name.replace(/'/g,"\'")}','${store.zone}')" style="font-size:10px;padding:2px 7px;border-radius:5px;border:1px solid #b3d4f5;background:#e6f1fb;color:#0c447c;cursor:pointer;margin-bottom:2px;display:block">⬇ B1</button>`:''}
+        ${b2.ci!=='—'?`<button onclick="generarInvitacionPNG('${b2.ci}','${b2.nm.replace(/'/g,"\'")}','B2','${store.name.replace(/'/g,"\'")}','${store.zone}')" style="font-size:10px;padding:2px 7px;border-radius:5px;border:1px solid #ddd6fe;background:#f5f3ff;color:#5b21b6;cursor:pointer;display:block">⬇ B2</button>`:''}
+      </td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>
+  <div class="rsection"><div class="rsection-title">
+    <span style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block"></span>
+    No postularon (${nop.length} tiendas)</div>
+    <table class="rtable"><thead><tr><th>Zona</th><th>Centro de Trabajo</th></tr></thead><tbody>`;
+  nop.forEach(s=>{
+    const zc=ZC[s.zone]||{bg:"#f1f5f9",color:"#0f172a"};
+    html+=`<tr><td><span class="badge-z" style="background:${zc.bg};color:${zc.color}">${ZL[s.zone]||s.zone}</span></td><td><strong>${s.name}</strong></td></tr>`;
+  });
+  html+='</tbody></table></div>';
+  document.getElementById('reporte-content').innerHTML=html;
+}
+
+// ── GESTIÓN ──────────────────────────────────────────────────
+function renderGestion(){
+  const zf=document.getElementById('g-zona')?document.getElementById('g-zona').value:'';
+  const el=document.getElementById('gestion-content');
+  if(!el)return;
+  const rows=POSTULACIONES.filter(p=>!zf||p["Zona"]===zf);
+  if(!rows.length){
+    el.innerHTML='<div style="text-align:center;padding:3rem;color:#94a3b8;font-size:13px">No hay postulaciones registradas aún.</div>';
+    return;
+  }
+  // Agrupar por tienda
+  const byTienda={};
+  rows.forEach(r=>{
+    const t=r["Centro de Trabajo"]||"—";
+    if(!byTienda[t])byTienda[t]=[];
+    byTienda[t].push(r);
+  });
+  let html='';
+  for(const [tienda,list] of Object.entries(byTienda)){
+    const zona=list[0]["Zona"]||"";
+    const zc=ZC[zona]||{bg:"#f1f5f9",color:"#0f172a",label:zona};
+    html+=`<div style="margin-bottom:16px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+      <div style="background:${zc.bg};padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e2e8f0">
+        <span style="background:${zc.bg};color:${zc.color};font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;border:1px solid ${zc.color}22">${zc.label}</span>
+        <span style="font-size:14px;font-weight:600;color:#0f172a">${tienda}</span>
+        <span style="margin-left:auto;font-size:11px;color:#64748b">${list.length} brigadista(s)</span>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:#f8fafc">
+          <th style="padding:8px 16px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;color:#64748b;border-bottom:1px solid #e2e8f0">CI</th>
+          <th style="padding:8px 16px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;color:#64748b;border-bottom:1px solid #e2e8f0">Nombre</th>
+          <th style="padding:8px 16px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;color:#64748b;border-bottom:1px solid #e2e8f0">Rol</th>
+          <th style="padding:8px 16px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;color:#64748b;border-bottom:1px solid #e2e8f0">Fechas</th>
+          <th style="padding:8px 16px;text-align:center;font-size:10px;font-weight:600;text-transform:uppercase;color:#64748b;border-bottom:1px solid #e2e8f0">Acciones</th>
+        </tr></thead>
+        <tbody>`;
+    list.forEach((p,idx)=>{
+      const ci=p["CI"],nm=p["Nombre"],brig=p["Brigadista"]||"",f1=p["Fecha1"]||"",f2=p["Fecha2"]||"";
+      // Limpiar fechas largas tipo "Tue Jun 16 2026 00:00:00 GMT-0400..."
+      function cleanF(f){
+        if(!f)return'—';
+        const d=new Date(f);
+        if(!isNaN(d.getTime())){
+          return d.getDate()+' '+['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()];
+        }
+        return f;
+      }
+      const f1s=cleanF(f1), f2s=cleanF(f2);
+      const brigColor=brig==='B1'?{bg:'#dbeafe',color:'#1e40af'}:{bg:'#ede9fe',color:'#5b21b6'};
+      const border=idx<list.length-1?'border-bottom:1px solid #f1f5f9':'';
+      html+=`<tr style="${border}">
+        <td style="padding:10px 16px"><strong>${ci}</strong></td>
+        <td style="padding:10px 16px">${nm}</td>
+        <td style="padding:10px 16px"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:${brigColor.bg};color:${brigColor.color}">${brig}</span></td>
+        <td style="padding:10px 16px;font-size:12px;color:#64748b">${f1s} · ${f2s}</td>
+        <td style="padding:10px 16px;text-align:center;white-space:nowrap">
+          <button onclick="generarInvitacionPNG('${ci}','${nm.replace(/'/g,"\\'")}','${brig}','${tienda.replace(/'/g,"\\'")}','${zona}')"
+            style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #b3d4f5;background:#e6f1fb;color:#0c447c;cursor:pointer;margin-right:6px"
+            title="Regenerar invitación PNG">🖼️ Invitación</button>
+          <button onclick="confirmarEliminar('${ci}','${brig}','${tienda.replace(/'/g,"\\'")}','${nm.replace(/'/g,"\\'")}')"
+            style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #fecdd3;background:#fff1f2;color:#9f1239;cursor:pointer"
+            title="Eliminar registro">🗑️ Eliminar</button>
+        </td>
+      </tr>`;
+    });
+    html+=`</tbody></table></div>`;
+  }
+  el.innerHTML=html;
+}
+
+function confirmarEliminar(ci,brig,tienda,nombre){
+  if(!confirm(`¿Eliminar a ${nombre} (CI: ${ci}) como ${brig} en ${tienda}?\n\nEsta acción no se puede deshacer.`))return;
+  eliminarBrigadista(ci,brig,tienda);
+}
+
+async function eliminarBrigadista(ci,brig,tienda){
+  try{
+    const res=await jsonpPost({action:'eliminar',ci,brigadista:brig,tienda});
+    if(res.ok){
+      await loadData();
+      alert('✓ Registro eliminado correctamente.');
+    } else if(res.error && res.error.includes('inválido')){
+      alert('⚠️ El Apps Script necesita ser actualizado.\n\nActualiza el código .gs y publica una Nueva Implementación.');
+    } else {
+      alert('Error: '+res.error);
+    }
+  }catch(e){alert('Error: '+e.message);}
+}
+
+// ── INVITACIÓN PNG via Canvas ─────────────────────────────────
+function generarInvitacionPNG(ci,nombre,brig,tienda,zona){
+  const zc    = ZC[zona]||{label:zona};
+  const fechaM1 = brig==='B1'?'Martes 16 de junio, 2025':'Jueves 18 de junio, 2025';
+  const fechaM2 = brig==='B1'?'Martes 23 de junio, 2025':'Jueves 25 de junio, 2025';
+  const sede1   = 'Av. Francisco de Miranda, cruce con Av. Principal de La Carlota';
+  const sede2   = 'Municipio Sucre  ·  Metro Los Dos Caminos (Línea 1)';
+
+  const W=660, H=1000;
+  const cv=document.createElement('canvas');
+  cv.width=W*2; cv.height=H*2;
+  const c=cv.getContext('2d');
+  c.scale(2,2);
+
+  // ── FONDO
+  c.fillStyle='#ffffff'; c.fillRect(0,0,W,H);
+
+  // ── HEADER azul
+  c.fillStyle='#1a6fa8'; c.fillRect(0,0,W,108);
+
+  // SHA — letras juntas
+  c.font='900 50px Arial Black,Arial,sans-serif';
+  const sw=36, sx=24, sy=74;
+  c.fillStyle='#f5c842'; c.fillText('S',sx,sy);
+  c.fillStyle='#29b6e8'; c.fillText('H',sx+sw,sy);
+  c.fillStyle='#5b3f9f'; c.fillText('A',sx+sw*2,sy);
+
+  // Separador sutil
+  c.fillStyle='rgba(255,255,255,0.18)'; c.fillRect(178,18,1,72);
+
+  // FARMATODO — grande y prominente
+  c.font='900 26px Arial Black,Arial,sans-serif';
+  c.fillStyle='#ffffff'; c.fillText('FARMATODO',192,52);
+  c.font='bold 12px Arial,sans-serif';
+  c.fillStyle='#f5c842'; c.fillText('Seguridad · Higiene · Ambiente',192,72);
+
+  // Badge BRIGADISTA DE EMERGENCIA — sin número
+  c.fillStyle='#f5c842';
+  roundRect(c,W-158,18,142,72,10); c.fill();
+  c.fillStyle='#0d3d6b';
+  c.font='900 15px Arial Black,Arial,sans-serif';
+  c.textAlign='center'; c.fillText('BRIGADISTA',W-87,46);
+  c.font='bold 11px Arial,sans-serif';
+  c.fillText('DE EMERGENCIA',W-87,64);
+  // Franja triple SHA debajo del badge
+  const bx=W-158, bw=142/3;
+  c.fillStyle='#f5c842'; c.fillRect(bx,    90,bw,  8);
+  c.fillStyle='#29b6e8'; c.fillRect(bx+bw, 90,bw,  8);
+  c.fillStyle='#5b3f9f'; c.fillRect(bx+bw*2,90,bw, 8);
+  c.textAlign='left';
+
+  // ── ÍCONO escudo
+  const shX=36,shY=126,shW=68,shH=80;
+  c.fillStyle='#0d3d6b';
+  c.beginPath();
+  c.moveTo(shX+shW/2,shY); c.lineTo(shX+shW,shY+18);
+  c.lineTo(shX+shW,shY+shH*0.6);
+  c.quadraticCurveTo(shX+shW,shY+shH,shX+shW/2,shY+shH);
+  c.quadraticCurveTo(shX,shY+shH,shX,shY+shH*0.6);
+  c.lineTo(shX,shY+18); c.closePath(); c.fill();
+  c.strokeStyle='#f5c842'; c.lineWidth=2;
+  c.stroke();
+  c.fillStyle='#ffffff';
+  c.fillRect(shX+shW/2-4,shY+22,8,36);
+  c.fillRect(shX+shW/2-16,shY+34,32,8);
+
+  // ── TÍTULO
+  c.fillStyle='#64748b'; c.font='bold 11px Arial,sans-serif';
+  c.fillText('COMUNICACIÓN INTERNA — CONVOCATORIA',120,150);
+  c.fillStyle='#0d3d6b'; c.font='900 24px Arial Black,Arial,sans-serif';
+  c.fillText('Formación de',120,178);
+  c.fillStyle='#1a6fa8'; c.font='900 24px Arial Black,Arial,sans-serif';
+  c.fillText('Brigadistas de Emergencia',120,208);
+
+  // Línea triple SHA
+  c.fillStyle='#f5c842'; c.fillRect(36,220,160,4);
+  c.fillStyle='#29b6e8'; c.fillRect(198,220,140,4);
+  c.fillStyle='#5b3f9f'; c.fillRect(340,220,140,4);
+
+  // ── MENSAJE
+  c.fillStyle='#374151'; c.font='14px Arial,sans-serif';
+  const msg='Estimado(a) colaborador(a), tu participación en este programa es fundamental para preservar la salud y seguridad de nuestros compañeros de trabajo y clientes. Juntos construimos entornos más seguros en cada una de nuestras tiendas.';
+  wrapText(c,msg,36,258,W-72,22);
+
+  // ── SEPARADOR
+  c.fillStyle='#e2e8f0'; c.fillRect(36,332,W-72,1);
+
+  // ── TARJETA COLABORADOR
+  c.fillStyle='#f8fafc'; roundRect(c,36,348,W-72,108,10); c.fill();
+  c.strokeStyle='#e2e8f0'; c.lineWidth=1; roundRect(c,36,348,W-72,108,10); c.stroke();
+  c.fillStyle='#1a6fa8'; roundRect(c,36,348,6,108,10); c.fill();
+  // Avatar
+  c.fillStyle='#1a6fa8'; c.beginPath(); c.arc(90,402,26,0,Math.PI*2); c.fill();
+  const ini=nombre.split(' ').map(n=>n[0]||'').slice(0,2).join('').toUpperCase();
+  c.fillStyle='#ffffff'; c.font='bold 16px Arial,sans-serif';
+  c.textAlign='center'; c.fillText(ini,90,409); c.textAlign='left';
+  // Datos
+  c.fillStyle='#64748b'; c.font='bold 10px Arial,sans-serif'; c.fillText('COLABORADOR DESIGNADO',126,368);
+  c.fillStyle='#0f172a'; c.font='bold 18px Arial,sans-serif'; c.fillText(nombre,126,394);
+  c.fillStyle='#374151'; c.font='13px Arial,sans-serif';
+  c.fillText('C.I.:  '+ci,126,416);
+  c.fillText('Tienda:  '+tienda,126,436);
+
+  // ── TARJETA FECHAS morada
+  c.fillStyle='#4a3f9f'; roundRect(c,36,476,W-72,200,12); c.fill();
+  c.fillStyle='#ffffff'; c.font='bold 13px Arial,sans-serif';
+  c.fillText('FECHAS Y LUGAR DE FORMACIÓN',58,504);
+  c.fillStyle='rgba(255,255,255,0.2)'; c.fillRect(58,512,W-116,1);
+  // M1
+  c.fillStyle='rgba(255,255,255,0.1)'; roundRect(c,58,520,W-116,38,6); c.fill();
+  c.fillStyle='#f5c842'; c.font='bold 10px Arial,sans-serif'; c.fillText('MÓDULO 1',68,536);
+  c.fillStyle='#ffffff'; c.font='13px Arial,sans-serif'; c.fillText(fechaM1+'  ·  8:00 – 11:30 a.m.',68,552);
+  // M2
+  c.fillStyle='rgba(255,255,255,0.1)'; roundRect(c,58,566,W-116,38,6); c.fill();
+  c.fillStyle='#f5c842'; c.font='bold 10px Arial,sans-serif'; c.fillText('MÓDULO 2',68,582);
+  c.fillStyle='#ffffff'; c.font='13px Arial,sans-serif'; c.fillText(fechaM2+'  ·  8:00 – 11:30 a.m.',68,598);
+  // Sede
+  c.fillStyle='rgba(255,255,255,0.1)'; roundRect(c,58,612,W-116,56,6); c.fill();
+  c.fillStyle='#f5c842'; c.font='bold 11px Arial,sans-serif'; c.fillText('📍  SEDE',68,630);
+  c.fillStyle='#ffffff'; c.font='bold 12px Arial,sans-serif'; c.fillText(sede1,68,648);
+  c.fillStyle='rgba(255,255,255,0.65)'; c.font='11px Arial,sans-serif'; c.fillText(sede2,68,664);
+
+  // ── MENSAJE MOTIVACIONAL
+  c.fillStyle='#0d3d6b'; roundRect(c,36,696,W-72,84,10); c.fill();
+  c.fillStyle='#f5c842'; c.fillRect(36,696,5,84);
+  c.fillStyle='#ffffff'; c.font='bold 14px Arial,sans-serif';
+  c.textAlign='center'; c.fillText('Tu participación marca la diferencia',W/2,722);
+  c.fillStyle='rgba(255,255,255,0.8)'; c.font='12px Arial,sans-serif';
+  wrapTextCenter(c,'Contribuyes activamente a la protección de la vida y el bienestar de todos en Farmatodo. ¡Gracias por tu compromiso!',W/2,742,W-100,20);
+  c.textAlign='left';
+
+
+
+  // Descargar
+  cv.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='Invitacion_Brigadista_'+nombre.replace(/\s+/g,'_')+'.png';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),2000);
+  },'image/png');
+}
+
+// Helpers canvas
+function wrapText(ctx,text,x,y,maxW,lineH){
+  const words=text.split(' ');let line='';
+  for(const w of words){
+    const test=line+w+' ';
+    if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x,y);line=w+' ';y+=lineH;}
+    else line=test;
+  }
+  if(line)ctx.fillText(line,x,y);
+}
+function wrapTextCenter(ctx,text,cx,y,maxW,lineH){
+  const words=text.split(' ');let line='';
+  ctx.textAlign='center';
+  for(const w of words){
+    const test=line+w+' ';
+    if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,cx,y);line=w+' ';y+=lineH;}
+    else line=test;
+  }
+  if(line)ctx.fillText(line,cx,y);
+  ctx.textAlign='left';
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+
+// Mostrar formulario de inmediato, cargar datos en background
+document.getElementById('global-loading').style.display='none';
+showTab('postulacion');
+loadData();
+</script>
+</body></html>
